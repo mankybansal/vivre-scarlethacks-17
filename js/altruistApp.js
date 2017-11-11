@@ -58,6 +58,6 @@ altruistApp.angular.config(['$routeProvider', '$locationProvider', function ($ro
 }]);
 
 
-altruistApp.angular.controller('miAppController', function ($scope, $http) {
+altruistApp.angular.controller('altruistAppController', function ($scope, $http) {
 
 });
