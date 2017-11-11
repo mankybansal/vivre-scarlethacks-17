@@ -7,21 +7,13 @@ var altruistApp = {
     },
     currentPage: null,
     nodeURL: 'https://vivre.manky.me:3000/',
-    angular: angular.module("angularApp", ["ngRoute"])
+    angular: angular.module("altruistApp", ["ngRoute"])
 };
 
 
 
 altruistApp.angular.config(["$locationProvider", function ($locationProvider) {
     // hack for html5Mode customization
-    $('a').each(function () {
-        $a = $(this);
-        if ($a.is('[target]') || $a.is('[ng-href]')) {
-        } else {
-            $a.attr('target', '_self');
-        }
-    });
-
     $locationProvider.html5Mode(true);
 }]);
 
@@ -50,8 +42,7 @@ altruistApp.angular.config(['$routeProvider', '$locationProvider', function ($ro
             controller: "catalogController"
         })
         .otherwise({
-            templateUrl: "templates/404.html",
-            controller: "pnfController"
+            templateUrl: "templates/404.html"
         });
 
     $locationProvider.html5Mode({enabled: true, rewriteLinks: false});
@@ -59,5 +50,9 @@ altruistApp.angular.config(['$routeProvider', '$locationProvider', function ($ro
 
 
 altruistApp.angular.controller('altruistAppController', function ($scope, $http) {
+
+});
+
+altruistApp.angular.controller('homeController', function ($scope, $http) {
 
 });
