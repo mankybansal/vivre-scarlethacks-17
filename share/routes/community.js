@@ -3,6 +3,7 @@ var router = express.Router();
 var Community = require('../app/models/community');
 
 router.get('/', function(req,res) {
+    var decoded = req.decoded;
 	Community.find({},function(err,docs){
 		return res.json({success:true,result:docs});
 	});
@@ -12,6 +13,7 @@ router.post('/',function(req,res){
     var community = new Community({
         name : req.body.name
     });
+    
     community.save(function(err){
        
 		if(err){

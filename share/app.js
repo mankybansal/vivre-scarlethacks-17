@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose  = require('mongoose');
+var jwt    = require('jsonwebtoken');
+
 mongoose.connect('mongodb://localhost:27017/scarlethacks');
 
 var index = require('./routes/index');
@@ -27,10 +29,45 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+
 app.use('/login',login);
 app.use('/register',register);
-app.use('/community',communities);
+//app.use('/community',communities);
+
+
+function authenticate(req,res,next){
+  // check header or url parameters or post parameters for token
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+  // decode token
+  if (token) {
+
+    // verifies secret and checks exp
+    jwt.verify(token,"karthic", function(err, decoded) {
+      if (err) {
+        return res.json({ success: false, message: 'Failed to authenticate token.' });
+      } else {
+        // if everything is good, save to request for use in other routes
+        req.decoded = decoded;
+        next();
+      }
+    });
+
+  } else {
+
+    // if there is no token
+    // return an error
+    return res.status(403).send({
+        success: false,
+        message: 'No token provided.'
+    });
+
+  }
+};
+app.use('/users',authenticate, users);
+app.use('/community',authenticate,communities);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
