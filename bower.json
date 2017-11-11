@@ -1,0 +1,26 @@
+{
+  "name": "vivre-scarlethacks-17",
+  "homepage": "https://github.com/mankybansal/vivre-scarlethacks-17",
+  "authors": [
+    "Mayank Bansal <sunny.bansal@gmail.com>"
+  ],
+  "description": "Vivre - The Sharing Community (ScarletHacks 17)",
+  "main": "index.html",
+  "keywords": [
+    "Sharing",
+    "Community",
+    "Borrowing",
+    "Lending"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "roboto-fontface": "^0.8.0"
+  }
+}
