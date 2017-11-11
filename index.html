@@ -1,0 +1,72 @@
+<html prefix="og: http://ogp.me/ns#">
+
+<head>
+
+    <!-- META TAGS -->
+    <meta charset="UTF-8">
+    <title> Altruist - The Sharing Community </title>
+
+    <base href="/">
+
+    <!-- TODO: Add Meta Tags and Open Gra
+
+    <!-- ANGULAR/JS SCRIPTS -->
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/a0-angular-storage/dist/angular-storage.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/parallax.js/parallax.min.js"></script>
+    <script src="/js/altruistApp.js"></script>
+    <script src="/js/default.js"></script>
+
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/bower_components/roboto-fontface/css/roboto/roboto-fontface.css" type="text/css">
+    <link rel="stylesheet" href="/bower_components/animate.css/animate.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/default.css" type="text/css">
+
+    <!-- FAVICON -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+
+</head>
+
+<body ng-app="altruistApp" ng-controller="altruistAppController">
+
+<!-- HEADER CONTENT DESKTOP-->
+<div class="header">
+
+    <div class="header-spacer-responsive" style="float: left;"></div>
+
+    <a href="home">
+        <div class="header-logo clickable">
+            <img src="images/logo-white.png" class="header-logo-img clickable">
+        </div>
+    </a>
+
+    <div class="header-spacer-responsive" style="float: right;"></div>
+
+    <div class="action-button clickable getstarted-button s-s-4" id="s-s-4">Get Started</div>
+
+    <a href="https://midossier.mitraz.financial" target="_blank">
+        <div class="action-button clickable" id="login-button">Account Login</div>
+    </a>
+
+    <div class="header-links clickable s-s-3" id="s-s-3">Contact Us</div>
+
+    <a href="https://mithoughts.mitraz.financial" target="_blank">
+        <div class="header-links clickable">Blog</div>
+    </a>
+
+    <a href="faqs" target="_self">
+        <div class="header-links clickable">FAQs</div>
+    </a>
+
+</div>
+
+<ng-view autoscroll="true"></ng-view>
+
+<!-- FOOTER CONTENT-->
+
+</body>
+
+</html>
