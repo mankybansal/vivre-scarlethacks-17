@@ -11,12 +11,18 @@ var altruistApp = {
 };
 
 
-
 altruistApp.angular.config(["$locationProvider", function ($locationProvider) {
     // hack for html5Mode customization
+    $('a').each(function () {
+        $a = $(this);
+        if ($a.is('[target]') || $a.is('[ng-href]')) {
+        } else {
+            $a.attr('target', '_self');
+        }
+    });
+
     $locationProvider.html5Mode(true);
 }]);
-
 
 altruistApp.angular.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
@@ -46,6 +52,7 @@ altruistApp.angular.config(['$routeProvider', '$locationProvider', function ($ro
         });
 
     $locationProvider.html5Mode({enabled: true, rewriteLinks: false});
+
 }]);
 
 
@@ -53,6 +60,16 @@ altruistApp.angular.controller('altruistAppController', function ($scope, $http)
 
 });
 
+
 altruistApp.angular.controller('homeController', function ($scope, $http) {
+
+});
+
+
+altruistApp.angular.controller('dashboardController', function ($scope, $http) {
+
+});
+
+altruistApp.angular.controller('catalogController', function ($scope, $http) {
 
 });
