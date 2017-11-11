@@ -1,17 +1,37 @@
 <html>
 	<head>
+
+		<link rel="stylesheet" href="../css/accountcss.css">
 		<!-- Compiled and minified CSS -->
   		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> 
 	</head>
-	<body>
+	<body class="">
 		<!--To make profile for users-->
 		<div class="" id="">
-			<!-- To have the profile picture here -->
 			<div>
-				<img src="img/sampProfile.png">
+				<!-- Nav Bar for Account -->
+				<nav>
+				    <div class="nav-wrapper">
+				      <a href="#" class="brand-logo">Logo</a>
+				      <ul id="nav-mobile" class="right hide-on-med-and-down">
+				        <li><a href="dashboard.html">Dashboard</a></li>
+				        <li><a href="catalog.html">Catalog</a></li>
+				      </ul>
+				    </div>
+				  </nav>
+			</div>
+
+			<!-- To have the profile picture here -->
+			<div class="marginDist">
+				<div class="row">
+					<div class="col s6 m6 l4">
+						<img src="../img/sampProfile.png" alt="Profile picture" width="50" height="50" id="profile-img">	
+					</div>
+				</div>
 			</div>
 		</div>
 
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 		<!-- Compiled and minified JavaScript -->
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	</body>
