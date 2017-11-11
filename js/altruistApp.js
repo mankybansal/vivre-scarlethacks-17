@@ -7,7 +7,7 @@ var altruistApp = {
     },
     currentPage: null,
     nodeURL: 'https://vivre.manky.me:3000/',
-    angular: angular.module("miApp", ["ngRoute"])
+    angular: angular.module("angularApp", ["ngRoute"])
 };
 
 
