@@ -3,7 +3,9 @@ var altruistApp = {
         home: 0,
         dashboard: 1,
         catalog: 2,
-        account: 3
+        account: 3,
+        product: 4,
+        pageNotFound: 5
     },
     currentPage: null,
     nodeURL: 'http://vivre.manky.me:3000/',
@@ -12,7 +14,6 @@ var altruistApp = {
 
 
 altruistApp.angular.config(["$locationProvider", function ($locationProvider) {
-
     //$locationProvider.html5Mode(true);
 }]);
 
@@ -38,12 +39,9 @@ altruistApp.angular.config(['$routeProvider', '$locationProvider', function ($ro
         .when("/catalog", {
             templateUrl: "templates/catalog.html",
             controller: "catalogController"
-        }).when("/search",{
-            templateUrl: "templates/search.html",
-            controller: "searchController"
-    }).otherwise({
-            templateUrl: "templates/404.html"
-        });
+        }).otherwise({
+        templateUrl: "templates/404.html"
+    });
 
     //$locationProvider.html5Mode({enabled: true, rewriteLinks: false});
 
@@ -91,22 +89,18 @@ altruistApp.requests = {
         var settings = {};
         serverRequest("GET", "community", settings, callback);
     },
-    search:function(params,callback){
+
+    search: function (params, callback) {
         var settings = {};
-        var str = "search/by/"+params.key
-        serverRequest("GET",str,settings,callback);
+        var str = "search/by/" + params.key;
+        serverRequest("GET", str, settings, callback);
     },
-    trendingSearch:function(callback){
+
+    trendingSearch: function (callback) {
         var settings = {};
         var str = "search/trending";
-        serverRequest("GET",str,settings,callback);
+        serverRequest("GET", str, settings, callback);
     }
-<<<<<<< HEAD
-    
-=======
-
-
->>>>>>> 7535fedbc3c67d4f35f3ea9e70d46a40a367e4ab
 };
 
 altruistApp.angular.controller('altruistAppController', function ($scope, store, $http) {
@@ -159,9 +153,9 @@ altruistApp.angular.controller('altruistAppController', function ($scope, store,
             token: $scope.user.token
         };
 
-        altruistApp.requests.login(params,function (response2) {
+        altruistApp.requests.login(params, function (response2) {
             console.log(response2);
-            $scope.safeApply(function(){
+            $scope.safeApply(function () {
                 if (!response2.success) {
                     //alert("LOGIN FAIL");
                     $scope.requireRegister = true;
@@ -206,10 +200,11 @@ altruistApp.angular.controller('altruistAppController', function ($scope, store,
 
     $scope.register = function () {
         console.log($scope.user);
-        altruistApp.requests.register($scope.user, $scope.safeApply(function (response) {
-            $scope.user = response.result;
-            $scope.loginSuccess();
-        }));
+        altruistApp.requests.register($scope.user, function (response) {
+            $scope.safeApply(function () {
+                $scope.login();
+            })
+        });
     };
 
     $scope.safeApply = function (fn) {
@@ -239,28 +234,28 @@ altruistApp.angular.controller('dashboardController', function ($scope, $http) {
 
 });
 
-altruistApp.angular.controller('catalogController', function ($scope, $http) {
-
-});
-
 altruistApp.angular.controller('accountController', function ($scope, $http) {
     //Need User Details
-    
+
 });
 //code for search
 
 
-altruistApp.angular.controller('searchController', function ($scope, $http) {
-    $scope.trending_items  = {};
-    $scope.getTrending = function(){
-        altruistApp.requests.trendingSearch(function(response){
-            $scope.safeApply(function(){
+altruistApp.angular.controller('catalogController', function ($scope, $http) {
+
+    $scope.trending_items = {};
+
+    $scope.autoComplete = null;
+
+    $scope.getTrending = function () {
+        altruistApp.requests.trendingSearch(function (response) {
+            $scope.safeApply(function () {
                 $scope.trending_items = response.result;
             });
-            
+
         })
-    }
-    
+    };
+
     $scope.safeApply = function (fn) {
         var phase = this.$root.$$phase;
         if (phase === '$apply' || phase === '$digest') {
@@ -269,17 +264,30 @@ altruistApp.angular.controller('searchController', function ($scope, $http) {
         } else
             this.$apply(fn);
     };
-    
+
     $scope.getTrending();
-    
-    
-    $scope.search = function(){
+
+    $scope.search = function () {
         var params = {
-            key:$scope.searchVal
-        }
-        altruistApp.requests.search(params,function(response){
+            key: $scope.searchVal
+        };
+        altruistApp.requests.search(params, function (response) {
+            if(response.success) {
+                $scope.autoComplete = response.result;
+            }
             console.log(response);
         })
+    };
+
+    $scope.autoSearch = function(){
+        $scope.count+=1;
+        $scope.count %=3;
+
+        if($scope.searchVal === "") $scope.autoComplete = null;
+        //console.log($scope.count);
+        if($scope.count == 2){
+            $scope.search();
+        }
     }
 });
 
