@@ -63,7 +63,8 @@ io.on('connection', function (socket) {
 
  });
     socket.on('update-url',function(data){
-        console.log('lol');
+        console.log(data);
+        console.log(data.token);
     })
 });
 app.use(function(req,res,next){
