@@ -11,7 +11,7 @@ html, body {
 .header {
     height: 80px;
     width: 100%;
-    position: absolute;
+    position: fixed;
     z-index: 9999;
     top: 0;
     box-sizing: border-box;
@@ -40,7 +40,7 @@ html, body {
 }
 
 .section-header-spacer {
-    height: 60px;
+    height: 80px;
 }
 
 .header-spacer-responsive {

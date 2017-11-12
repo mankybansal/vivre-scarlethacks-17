@@ -27,11 +27,19 @@
     .item {
         display: inline-block;
         box-sizing: border-box;
-        margin: 15px 5px 10px 5px;
+        margin: 0px 5px 10px 5px;
         width: 200px;
-        height: 220px;
+        height: 235px;
+        padding-top: 15px;
+        border-radius: 10px;
         vertical-align: top;
         text-align: center;
+        transition: all ease 0.3s;
+        cursor: pointer;
+    }
+
+    .item:hover {
+        background: rgba(0,0,0,0.03);
     }
 
     .item-image {
@@ -39,13 +47,12 @@
         width: 140px;
         height: 140px;
         background: #DDD;
-        border: 3px solid #EEE;
+        border: 3px solid #FFF;
     }
 
     .item-img {
         width: 100%;
         opacity: .05;
-        z-index: 0;
     }
 
     .item-name {
@@ -64,7 +71,7 @@
     .item-category {
         display: inline-block;
         position: relative;
-        z-index: 999;
+        z-index: 200;
         background: #333;
         text-transform: uppercase;
         font-family: Roboto-Light;
@@ -81,7 +88,7 @@
         height: 60px;
         text-align: center;
         position: relative;
-        z-index: 0;
+        z-index: 800;
     }
 
     .searchBar {
@@ -98,6 +105,7 @@
         border-radius: 10px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         margin-top: -30px;
+        transition: all ease .3s;
     }
 
     .searchBtn {
@@ -109,12 +117,11 @@
         width: 70px;
         margin-left: -75px;
         margin-top: -25px;
-        background: steelblue;
         box-sizing: border-box;
         padding: 15px;
         font-size: 20px;
         border-radius: 10px;
-        color: white;
+        color: #AAA;
     }
 
     .autoComplete {
@@ -148,13 +155,25 @@
     .autoComplete-record:hover {
         background: rgba(0, 0, 0, 0.01);
     }
+
+    .suggestionContainer {
+        width: 100%;
+        height: 330px;
+    }
+
+    .suggestionTitle {
+        box-sizing: border-box;
+        padding: 45px 150px 15px 230px;
+        font-size: 30px;
+        font-family: Roboto-Light;
+    }
 </style>
 
 <div class="trendingContainer">
     <div class="trendingTitle">Items that are <span style="font-family: Roboto-Regular;">#trending</span></div>
 
     <div class="itemContainer">
-        <div class="item" ng-repeat="item in trending_items">
+        <div class="item" ng-repeat="item in trending_items" ng-click="itemClick(item._id)">
 
             <div class="item-image">
                 <img src="images/logo-menu.png" class="item-img">
@@ -175,8 +194,96 @@
     </div>
 
     <div class="autoComplete" ng-show="autoComplete">
-        <div class="autoComplete-record clickable" ng-repeat="result in autoComplete">
+        <div class="autoComplete-record clickable" ng-repeat="result in autoComplete" ng-if="$index < 5">
             {{result.name}}
+        </div>
+    </div>
+</div>
+
+
+<div class="suggestionContainer">
+    <div class="suggestionTitle">Books & Reading
+        &nbsp;<span style="font-size: 16px; color: steelblue">View More <i class="fa fa-angle-right"></i></span>
+    </div>
+
+    <div class="itemContainer">
+        <div class="item" ng-repeat="item in suggestions.books" ng-if="$index < 5"  ng-click="itemClick(item._id)">
+            <div class="item-image">
+                <img src="images/logo-menu.png" class="item-img">
+                <div class="item-category">{{item.category}}</div>
+            </div>
+            <div class="item-name">{{item.name}}</div>
+            <div class="item-author">{{item.attributes[0].Author}}</div>
+        </div>
+    </div>
+</div>
+
+<div class="suggestionContainer">
+    <div class="suggestionTitle">Video Games
+        &nbsp;<span style="font-size: 16px; color: steelblue">View More <i class="fa fa-angle-right"></i></span>
+    </div>
+
+    <div class="itemContainer">
+        <div class="item" ng-repeat="item in suggestions.games" ng-if="$index < 5"  ng-click="itemClick(item._id)">
+            <div class="item-image">
+                <img src="images/logo-menu.png" class="item-img">
+                <div class="item-category">{{item.category}}</div>
+            </div>
+            <div class="item-name">{{item.name}}</div>
+            <div class="item-author">{{item.attributes[0].Publisher + " . "}}
+                <span style="font-family: Roboto-Regular;">{{ item.attributes[0].genre}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="suggestionContainer">
+    <div class="suggestionTitle">Household
+        &nbsp;<span style="font-size: 16px; color: steelblue">View More <i class="fa fa-angle-right"></i></span>
+    </div>
+
+    <div class="itemContainer">
+        <div class="item" ng-repeat="item in suggestions.household" ng-if="$index < 5"  ng-click="itemClick(item._id)">
+            <div class="item-image">
+                <img src="images/logo-menu.png" class="item-img">
+                <div class="item-category">{{item.category}}</div>
+            </div>
+            <div class="item-name">{{item.name}}</div>
+            <div class="item-author">{{item.attributes[0].manufacture}}</div>
+        </div>
+    </div>
+</div>
+
+<div class="suggestionContainer">
+    <div class="suggestionTitle">Toys
+        &nbsp;<span style="font-size: 16px; color: steelblue">View More <i class="fa fa-angle-right"></i></span>
+    </div>
+
+    <div class="itemContainer">
+        <div class="item" ng-repeat="item in suggestions.toys" ng-if="$index < 5"  ng-click="itemClick(item._id)">
+            <div class="item-image">
+                <img src="images/logo-menu.png" class="item-img">
+                <div class="item-category">{{item.category}}</div>
+            </div>
+            <div class="item-name">{{item.name}}</div>
+            <div class="item-author">{{item.attributes[0].Author}}</div>
+        </div>
+    </div>
+</div>
+
+<div class="suggestionContainer">
+    <div class="suggestionTitle">Clothes
+        &nbsp;<span style="font-size: 16px; color: steelblue">View More <i class="fa fa-angle-right"></i></span>
+    </div>
+
+    <div class="itemContainer">
+        <div class="item" ng-repeat="item in suggestions.clothes" ng-if="$index < 5"  ng-click="itemClick(item._id)">
+            <div class="item-image">
+                <img src="images/logo-menu.png" class="item-img">
+                <div class="item-category">{{item.category}}</div>
+            </div>
+            <div class="item-name">{{item.name}}</div>
+            <div class="item-author">{{item.attributes[0].size + " . " + item.attributes[0].color }}</div>
         </div>
     </div>
 </div>

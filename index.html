@@ -64,9 +64,11 @@
 
     <div class="action-button clickable" ng-show="loggedIn" ng-click="signOut()">Log Out</div>
 
-    <div class="header-links clickable" ng-show="loggedIn">
-        Welcome, <b>{{ user.name }}</b> &nbsp;<i class="fa fa-user-circle" style="color: #AAA;"></i>
-    </div>
+    <a href="#!../account">
+        <div class="header-links clickable" ng-show="loggedIn">
+            Welcome, <b>{{ user.name }}</b> &nbsp;<i class="fa fa-user-circle" style="color: #AAA;"></i>
+        </div>
+    </a>
 
 </div>
 

@@ -36,6 +36,10 @@ altruistApp.angular.config(['$routeProvider', '$locationProvider', function ($ro
             templateUrl: "templates/account.html",
             controller: "accountController"
         })
+        .when("/product", {
+            templateUrl: "templates/product.html",
+            controller: "productController"
+        })
         .when("/catalog", {
             templateUrl: "templates/catalog.html",
             controller: "catalogController"
@@ -96,11 +100,35 @@ altruistApp.requests = {
         serverRequest("GET", str, settings, callback);
     },
 
+    searchByID: function (params, callback) {
+        var settings = {};
+        var str = "search/by/id/" + params.key;
+        serverRequest("GET", str, settings, callback);
+    },
+
+    searchByCategory: function (params, callback) {
+        var settings = {};
+        var str = "search/by/category/" + params.key;
+        serverRequest("GET", str, settings, callback);
+    },
+
     trendingSearch: function (callback) {
         var settings = {};
         var str = "search/trending";
         serverRequest("GET", str, settings, callback);
-    }
+    },
+
+    borrowNow: function (params, callback) {
+        var settings = {
+            data: {
+                token: params.token,
+                post_id: params.post_id,
+                poster_id: params.poster_id
+            }
+        };
+        serverRequest("POST", "borrowReq", settings, callback);
+    },
+
 };
 
 altruistApp.angular.controller('altruistAppController', function ($scope, store, $http) {
@@ -155,6 +183,7 @@ altruistApp.angular.controller('altruistAppController', function ($scope, store,
 
         altruistApp.requests.login(params, function (response2) {
             console.log(response2);
+
             $scope.safeApply(function () {
                 if (!response2.success) {
                     //alert("LOGIN FAIL");
@@ -165,8 +194,8 @@ altruistApp.angular.controller('altruistAppController', function ($scope, store,
                         });
                     });
                 } else {
-                    //alert("LOGIN SUCCESS");
                     $scope.user = response2.result;
+                    $scope.user.token = response2.token;
                     $scope.loginSuccess();
                 }
             });
@@ -241,53 +270,163 @@ altruistApp.angular.controller('accountController', function ($scope, $http) {
 //code for search
 
 
-altruistApp.angular.controller('catalogController', function ($scope, $http) {
+altruistApp.angular.controller('catalogController', function ($location, $scope, $http) {
 
-    $scope.trending_items = {};
+        $scope.trending_items = {};
 
-    $scope.autoComplete = null;
+        $scope.autoComplete = null;
 
-    $scope.getTrending = function () {
-        altruistApp.requests.trendingSearch(function (response) {
-            $scope.safeApply(function () {
-                $scope.trending_items = response.result;
+        $scope.getTrending = function () {
+            altruistApp.requests.trendingSearch(function (response) {
+                $scope.safeApply(function () {
+                    $scope.trending_items = response.result;
+                });
+
+            })
+        };
+
+        $scope.safeApply = function (fn) {
+            var phase = this.$root.$$phase;
+            if (phase === '$apply' || phase === '$digest') {
+                if (fn && (typeof(fn) === 'function'))
+                    fn();
+            } else
+                this.$apply(fn);
+        };
+
+        $scope.getTrending();
+
+        $scope.search = function () {
+            var params = {
+                key: $scope.searchVal
+            };
+            altruistApp.requests.search(params, function (response) {
+                if (response.success) {
+                    $scope.autoComplete = response.result;
+                }
+                console.log(response);
+            })
+        };
+
+        $scope.suggestions = {
+            books: null,
+            games: null,
+            household: null,
+            clothes: null,
+            toys: null
+        };
+
+
+        $scope.loadSuggestions = function () {
+
+            altruistApp.requests.searchByCategory({key: "Toys"}, function (response) {
+                $scope.safeApply(function () {
+                    if (response.success) {
+                        $scope.suggestions.toys = response.result;
+                    }
+                    console.log("Toys", response);
+                });
             });
 
-        })
-    };
+            altruistApp.requests.searchByCategory({key: "Household"}, function (response) {
+                $scope.safeApply(function () {
+                    if (response.success) {
+                        $scope.suggestions.household = response.result;
+                    }
+                    console.log("Household", response);
+                });
+            });
 
-    $scope.safeApply = function (fn) {
-        var phase = this.$root.$$phase;
-        if (phase === '$apply' || phase === '$digest') {
-            if (fn && (typeof(fn) === 'function'))
-                fn();
-        } else
-            this.$apply(fn);
-    };
+            altruistApp.requests.searchByCategory({key: "Clothes"}, function (response) {
+                $scope.safeApply(function () {
+                    if (response.success) {
+                        $scope.suggestions.clothes = response.result;
+                    }
+                    console.log("Clothes", response);
+                });
+            });
 
-    $scope.getTrending();
+            altruistApp.requests.searchByCategory({key: "Books"}, function (response) {
+                $scope.safeApply(function () {
+                    if (response.success) {
+                        $scope.suggestions.books = response.result;
+                    }
+                    console.log("Books", response);
+                });
+            });
 
-    $scope.search = function () {
-        var params = {
-            key: $scope.searchVal
+            altruistApp.requests.searchByCategory({key: "Video Games"}, function (response) {
+                $scope.safeApply(function () {
+                    if (response.success) {
+                        $scope.suggestions.games = response.result;
+                    }
+                    console.log("Video Games", response);
+                });
+            });
+
         };
-        altruistApp.requests.search(params, function (response) {
-            if(response.success) {
-                $scope.autoComplete = response.result;
+
+
+        $scope.itemClick = function (id) {
+            console.log(id);
+            var params = {
+                id: id
+            };
+
+            $location.path("product").search(params);
+        };
+
+        $scope.autoSearch = function () {
+            $scope.count += 1;
+            $scope.count %= 3;
+
+            if ($scope.searchVal === "") $scope.autoComplete = null;
+
+            //console.log($scope.count);
+            if ($scope.count == 2) {
+                $scope.search();
             }
-            console.log(response);
-        })
+        };
+
+
+        $scope.loadSuggestions();
+    }
+);
+
+
+altruistApp.angular.controller('productController', function (store, $location, $scope, $http) {
+
+    $scope.currentProduct = null;
+
+    $scope.init = function () {
+        altruistApp.requests.searchByID({key: $location.search().id}, function (response) {
+            $scope.safeApply(function () {
+                if (response.success) {
+                    $scope.currentProduct = response.result;
+                }
+            });
+        });
     };
 
-    $scope.autoSearch = function(){
-        $scope.count+=1;
-        $scope.count %=3;
+    $scope.borrowNow = function () {
+        $scope.user = store.get("userObject");
 
-        if($scope.searchVal === "") $scope.autoComplete = null;
-        //console.log($scope.count);
-        if($scope.count == 2){
-            $scope.search();
-        }
-    }
+        var params = {
+            token: $scope.user.token,
+            post_id: $scope.currentProduct._id,
+            poster_id: $scope.currentProduct.user[0]._id
+        };
+
+        altruistApp.requests.borrowNow(params, function (response) {
+            $scope.safeApply(function () {
+                console.log("BORROWWWWWWWWWWWWWWWWWWWW", response);
+            });
+        });
+
+
+    };
+
+    $scope.init();
 });
+
 
