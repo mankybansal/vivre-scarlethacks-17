@@ -5,7 +5,8 @@ var altruistApp = {
         catalog: 2,
         account: 3,
         product: 4,
-        pageNotFound: 5
+        pageNotFound: 5,
+        aboutUs: 6
     },
     currentPage: null,
     nodeURL: 'http://altruist.manky.me:3000/',
@@ -39,6 +40,9 @@ altruistApp.angular.config(['$routeProvider', '$locationProvider', function ($ro
         .when("/product", {
             templateUrl: "templates/product.html",
             controller: "productController"
+        })
+        .when("/about", {
+            templateUrl: "templates/about.html",
         })
         .when("/catalog", {
             templateUrl: "templates/catalog.html",
