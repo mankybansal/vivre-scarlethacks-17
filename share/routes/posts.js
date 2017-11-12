@@ -36,7 +36,7 @@ router.post('/',function(req,res){
 		attributes:attributes,
         status:req.body.status,
         deleted:"false",
-            image_url :req.body.image-url;
+            image_url :req.body.image-url
 
 	});
          post.save(function(err){
