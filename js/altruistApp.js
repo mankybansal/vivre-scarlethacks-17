@@ -3,7 +3,9 @@ var altruistApp = {
         home: 0,
         dashboard: 1,
         catalog: 2,
-        account: 3
+        account: 3,
+        product: 4,
+        pageNotFound: 5
     },
     currentPage: null,
     nodeURL: 'http://vivre.manky.me:3000/',
@@ -12,7 +14,6 @@ var altruistApp = {
 
 
 altruistApp.angular.config(["$locationProvider", function ($locationProvider) {
-
     //$locationProvider.html5Mode(true);
 }]);
 
@@ -141,9 +142,9 @@ altruistApp.angular.controller('altruistAppController', function ($scope, store,
             token: $scope.user.token
         };
 
-        altruistApp.requests.login(params,function (response2) {
+        altruistApp.requests.login(params, function (response2) {
             console.log(response2);
-            $scope.safeApply(function(){
+            $scope.safeApply(function () {
                 if (!response2.success) {
                     alert("LOGIN FAIL");
                     $scope.requireRegister = true;
@@ -188,10 +189,11 @@ altruistApp.angular.controller('altruistAppController', function ($scope, store,
 
     $scope.register = function () {
         console.log($scope.user);
-        altruistApp.requests.register($scope.user, $scope.safeApply(function (response) {
-            $scope.user = response.result;
-            $scope.loginSuccess();
-        }));
+        altruistApp.requests.register($scope.user, function (response) {
+            $scope.safeApply(function () {
+                $scope.login();
+            })
+        });
     };
 
     $scope.safeApply = function (fn) {
