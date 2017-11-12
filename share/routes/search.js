@@ -42,7 +42,7 @@ router.get('/trending',function(req,res){
 					return res.json({success:true,result:docs});
 
 				}
-		});
+		}).limit(5);
 });
 
 router.get('/by/category/:name',function(req,res){
