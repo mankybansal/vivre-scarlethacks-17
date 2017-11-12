@@ -6,8 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose  = require('mongoose');
 var jwt    = require('jsonwebtoken');
-var User = require('../app/models/user');
-var Post = require('../app/models/posts');
+var User = require('app/models/user');
+var Post = require('app/models/posts');
 
 mongoose.connect('mongodb://localhost:27017/scarlethacks');
 
