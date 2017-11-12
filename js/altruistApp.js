@@ -130,6 +130,18 @@ altruistApp.requests = {
         serverRequest("GET", str, settings, callback);
     },
 
+    getBorrowsLender: function (params, callback) {
+        var settings = {};
+        var str = "borrowReq/r?token=" + params.token;
+        serverRequest("GET", str, settings, callback);
+    },
+
+    getBorrowsBorrower: function (params, callback) {
+        var settings = {};
+        var str = "borrowReq/rlent?token=" + params.token;
+        serverRequest("GET", str, settings, callback);
+    },
+
     getYourItems: function (params, callback) {
         var settings = {};
         var str = "users/byME?token=" + params.token;
@@ -316,6 +328,8 @@ altruistApp.angular.controller('accountController', function (store, $scope, $ht
             $scope.overlayState.yourItems = true;
         } else if (overlay === $scope.overlay.borrowRequests) {
             $scope.overlayState.borrowRequests = true;
+        }else if (overlay === $scope.overlay.borrows) {
+            $scope.overlayState.borrows = true;
         }
     };
 
@@ -365,12 +379,14 @@ altruistApp.angular.controller('accountController', function (store, $scope, $ht
 
         $scope.overlay = {
             yourItems: 0,
-            borrowRequests: 1
+            borrowRequests: 1,
+            borrows: 2
         };
 
         $scope.overlayState = {
             yourItems: false,
-            borrowRequests: false
+            borrowRequests: false,
+            borrows: false
         };
 
         $scope.currentShow = null;
@@ -378,7 +394,9 @@ altruistApp.angular.controller('accountController', function (store, $scope, $ht
         $scope.metrics = {
             requestsGot: null,
             requestsSent: null,
-            yourItems: null
+            yourItems: null,
+            borrowsLender: null,
+            borrowsBorrower: null
         };
 
         $scope.user = store.get("userObject");
@@ -412,7 +430,21 @@ altruistApp.angular.controller('accountController', function (store, $scope, $ht
                 console.log("MY ITEMSSSSSSSS", response);
             });
         });
-    }
+
+        altruistApp.requests.getBorrowsBorrower(params, function (response) {
+            $scope.safeApply(function () {
+                $scope.metrics.borrowsBorrower = response;
+                console.log("AS BORROWER ITEMS", response);
+            });
+        });
+
+        altruistApp.requests.getBorrowsLender(params, function (response) {
+            $scope.safeApply(function () {
+                $scope.metrics.borrowsLender = response;
+                console.log("AS LENDER ITEMS", response);
+            });
+        });
+    };
 
     $scope.init();
 

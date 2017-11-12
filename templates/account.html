@@ -89,9 +89,11 @@
             <div class="panel-count">{{metrics.yourItems.result.length}}</div>
             <div class="action-button clickable" style="float: unset;">Item Manager</div>
         </div>
-        <div class="accountPanel animated fadeInUp" style="animation-delay: 0.3s;">
+        <div class="accountPanel animated fadeInUp" style="animation-delay: 0.3s;"
+             ng-click="showOverlay(overlay.borrows)">
             <div class="panel-title">Borrowed Items</div>
-            <div class="panel-count">0</div>
+            <div class="panel-count">{{metrics.borrowsBorrower.result.length + metrics.borrowsLender.result.length}}
+            </div>
             <div class="action-button clickable" style="float: unset;">Borrow History</div>
         </div>
         <div class="accountPanel animated fadeInUp" style="animation-delay: 0.4s;"
@@ -154,6 +156,8 @@
             margin: 10px;
             box-sizing: border-box;
             padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
 
         }
 
@@ -183,10 +187,7 @@
             font-family: Roboto-Regular;
         }
 
-
         /*******************/
-
-
 
         .itemContainer {
             width: 100%;
@@ -208,7 +209,7 @@
         }
 
         .item:hover {
-            background: rgba(0,0,0,0.03);
+            background: rgba(0, 0, 0, 0.03);
         }
 
         .item-image {
@@ -254,7 +255,6 @@
             margin-top: -28px;
         }
 
-
         /*******************/
 
     </style>
@@ -268,13 +268,16 @@
             <div class="overlayTitle">Borrow Requests</div>
 
 
-            <div class="borrowRequestContainer" ng-show="metrics.requestsGot.result.length + metrics.requestsSent.result.length > 0">
+            <div class="borrowRequestContainer"
+                 ng-show="metrics.requestsGot.result.length + metrics.requestsSent.result.length > 0">
                 <div class="borrowRequest blue" ng-repeat="request in metrics.requestsGot.result">
                     <div class="item-name">{{request.post[0].name}}</div>
                     <div class="item-borrower-name">{{request.borrower[0].name}}</div>
                     <div class="item-borrower-email">{{request.borrower[0].email}}</div>
                     <div class="item-request-date">Requested Today</div>
-                    <div class="action-button clickable" style="float: unset; background: #EEE; color: #333;" ng-click="acceptRequest(request.post[0]._id)">Accept Request</div>
+                    <div class="action-button clickable" style="float: unset; background: #EEE; color: #333;"
+                         ng-click="acceptRequest(request.post[0]._id)">Accept Request
+                    </div>
 
                 </div>
                 <div class="borrowRequest grey" ng-repeat="request in metrics.requestsSent.result">
@@ -282,22 +285,54 @@
                     <div class="item-borrower-name">{{request.poster[0].name}}</div>
                     <div class="item-borrower-email">{{request.poster[0].email}}</div>
                     <div class="item-request-date">Requested Today</div>
-                    <div class="action-button clickable" style="float: unset;" ng-click="cancelSelfRequest(request.post[0]._id)">Cancel Request</div>
+                    <div class="action-button clickable" style="float: unset;"
+                         ng-click="cancelSelfRequest(request.post[0]._id)">Cancel Request
+                    </div>
                 </div>
             </div>
 
-            <div  ng-show="metrics.requestsGot.result.length + metrics.requestsSent.result.length == 0"
-                  class="overlayTitle" style="font-size: 30px; font-family: Roboto-Thin;">There are no requests.</div>
+            <div ng-show="metrics.requestsGot.result.length + metrics.requestsSent.result.length == 0"
+                 class="overlayTitle" style="font-size: 30px; font-family: Roboto-Thin;">There are no requests.
+            </div>
+        </div>
+
+        <div ng-show="overlayState.borrows">
+            <div class="overlayTitle">Borrows</div>
+
+
+            <div class="borrowRequestContainer"
+                 ng-show="metrics.borrowsBorrower.result.length + metrics.borrowsLender.result.length > 0">
+                <div class="borrowRequest blue" ng-repeat="request in metrics.borrowsLender.result">
+                    <div class="item-name">{{request.post[0].name}}</div>
+                    <div class="item-borrower-name">{{request.borrower[0].name}}</div>
+                    <div class="item-borrower-email">{{request.borrower[0].email}}</div>
+                    <div class="item-request-date">Borrowed Today</div>
+                </div>
+                <div class="borrowRequest grey" ng-repeat="request in metrics.borrowsBorrower.result">
+                    <div class="item-name">{{request.post[0].name}}</div>
+                    <div class="item-borrower-name">{{request.poster[0].name}}</div>
+                    <div class="item-borrower-email">{{request.poster[0].email}}</div>
+                    <div class="item-request-date">Borrowed Today</div>
+                    <div class="action-button clickable" style="float: unset;">Return Item
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="metrics.borrowsBorrower.result.length + metrics.borrowsLender.result.length == 0"
+                 class="overlayTitle" style="font-size: 30px; font-family: Roboto-Thin;">You haven't lent to or borrowed
+                from anyone.
+            </div>
         </div>
 
         <div ng-show="overlayState.yourItems">
             <div class="overlayTitle">Your Items
-                <div class="action-button" style="float: unset;">Add Items</div></div>
-
+                <div class="action-button" style="float: unset;">Add Items</div>
+            </div>
 
 
             <div class="itemContainer" ng-show="metrics.yourItems.result.length > 0">
-                <div ng-repeat="item in metrics.yourItems.result" class="item animated fadeInRight" style="animation-delay: {{0.1*$index}}s"  ng-click="itemClick(item._id)">
+                <div ng-repeat="item in metrics.yourItems.result" class="item animated fadeInRight"
+                     style="animation-delay: {{0.1*$index}}s" ng-click="itemClick(item._id)">
 
                     <div class="item-image">
                         <img src="{{ item.image_url }}" class="item-img">
@@ -310,10 +345,9 @@
             </div>
 
 
-            <div  ng-show="metrics.yourItems.result.length == 0"
-                  class="overlayTitle" style="font-size: 30px; font-family: Roboto-Thin;">You haven't added any items.</div>
-
-
+            <div ng-show="metrics.yourItems.result.length == 0"
+                 class="overlayTitle" style="font-size: 30px; font-family: Roboto-Thin;">You haven't added any items.
+            </div>
         </div>
     </div>
 </div>
