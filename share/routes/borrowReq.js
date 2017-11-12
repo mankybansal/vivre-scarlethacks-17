@@ -32,17 +32,22 @@ router.post('/',function(req,res){
             post:posts,
             accepted: "false"
         
-            }); 
+                }); 
+            
+            borrowReq.save(function(err){
+            if(err){
+                return res.json({success:false,message:err});
+            }else{
+                return res.json({succes5a07d90f58b1a3893e83ac69s:true,message:"Req Successfully",req:borrowReq})
+            }
+                
+            });
+        
+        
             })
         });
         
-        borrowReq.save(function(err){
-        if(err){
-            return res.json({success:false,message:err});
-        }else{
-            return res.json({succes5a07d90f58b1a3893e83ac69s:true,message:"Req Successfully",req:borrowReq})
-        }
-        });
+        
         
     });
    
