@@ -101,7 +101,12 @@ altruistApp.requests = {
         var str = "search/trending";
         serverRequest("GET",str,settings,callback);
     }
+<<<<<<< HEAD
     
+=======
+
+
+>>>>>>> 7535fedbc3c67d4f35f3ea9e70d46a40a367e4ab
 };
 
 altruistApp.angular.controller('altruistAppController', function ($scope, store, $http) {
@@ -239,7 +244,8 @@ altruistApp.angular.controller('catalogController', function ($scope, $http) {
 });
 
 altruistApp.angular.controller('accountController', function ($scope, $http) {
-
+    //Need User Details
+    
 });
 //code for search
 
