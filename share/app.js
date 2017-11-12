@@ -14,6 +14,9 @@ var users = require('./routes/users');
 var login = require('./routes/login');
 var register = require('./routes/register');
 var communities = require('./routes/community');
+var posts   = require('./routes/posts');
+var search = require('./routes/search');
+var barcode = require('./routes/barcode');
 var app = express();
 
 // view engine setup
@@ -32,7 +35,9 @@ app.use('/', index);
 
 app.use('/login',login);
 app.use('/register',register);
-//app.use('/community',communities);
+app.use('/community',communities);
+app.use('/search',search);
+app.use('/barcode',barcode);
 
 
 function authenticate(req,res,next){
@@ -65,8 +70,7 @@ function authenticate(req,res,next){
   }
 };
 app.use('/users',authenticate, users);
-app.use('/community',authenticate,communities);
-
+app.use('/posts',authenticate,posts);
 
 
 // catch 404 and forward to error handler

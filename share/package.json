@@ -11,11 +11,12 @@
     "debug": "~2.2.0",
     "express": "~4.13.3",
     "jade": "~1.11.0",
-    "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0",
-    "mongoose": "~4.2.8",
     "jsonwebtoken": "~5.4.1",
+    "mongoose": "~4.2.8",
     "mongoose-softdelete": "~0.6.3",
-    "pug": "^2.0.0-rc.2"
+    "morgan": "~1.6.1",
+    "pug": "^2.0.0-rc.2",
+    "serve-favicon": "~2.3.0",
+    "walmart": "0.0.4"
   }
 }
