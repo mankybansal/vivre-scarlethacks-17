@@ -20,7 +20,7 @@ router.get('/me', function(req, res, next) {
 
 router.get('/byMe', function(req, res, next) {
   var token = req.decoded;
-    Post.find({email:token},function(err,docs){
+    Post.find({"user.email":token},function(err,docs){
         if(docs.length ===0 ){
             return res.json({success:false,result:[]});
         }else{
