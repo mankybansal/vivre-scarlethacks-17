@@ -7,8 +7,8 @@ var mongoose = require('mongoose');
 
 router.post('/',function(req,res){
     var email = req.decoded;
-    var poster_id = req.params.poster_id;
-    var post_id = req.params.post_id;
+    var poster_id = req.body.poster_id;
+    var post_id = req.body.post_id;
     console.log(poster_id);
     console.log(post_id);
     poster = [];
