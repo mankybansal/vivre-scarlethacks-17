@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 router.get('/by/:name',function(req,res){
 	var name = req.params.name;
     console.log(name);
-	Post.find({$and:[{$or:[{name:new RegExp(name,'i')},{"attributes.Author":new RegExp(name,'i')},{"attributes.Publisher": new RegExp(name,'i')}]},{deleted:{$ne:"true"}}]},null,{sort:{updated_at:-1}},function(err,docs){
+	Post.find({$and:[{$or:[{name:new RegExp(name,'i')},{"attributes.Author":new RegExp(name,'i')},{"attributes.Publisher": new RegExp(name,'i')},{"category": new RegExp(name,'i')}]},{deleted:{$ne:"true"}}]},null,{sort:{updated_at:-1}},function(err,docs){
 				if(err)
 				{
 					return res.json({success:false,message:"Unknown Error"})
