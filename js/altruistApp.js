@@ -118,6 +118,24 @@ altruistApp.requests = {
         serverRequest("GET", str, settings, callback);
     },
 
+    getRequests: function (params, callback) {
+        var settings = {};
+        var str = "borrowReq?token=" + params.token;
+        serverRequest("GET", str, settings, callback);
+    },
+
+    getRequestsSent: function (params, callback) {
+        var settings = {};
+        var str = "borrowReq/lent?token=" + params.token;
+        serverRequest("GET", str, settings, callback);
+    },
+
+    getYourItems: function (params, callback) {
+        var settings = {};
+        var str = "users/byME?token=" + params.token;
+        serverRequest("GET", str, settings, callback);
+    },
+
     borrowNow: function (params, callback) {
         var settings = {
             data: {
@@ -129,9 +147,29 @@ altruistApp.requests = {
         serverRequest("POST", "borrowReq", settings, callback);
     },
 
+    acceptRequest: function (params, callback) {
+        var settings = {
+            data: {
+                token: params.token,
+                pid: params.post_id
+            }
+        };
+        serverRequest("POST", "request", settings, callback);
+    },
+
+    cancelSelfRequest: function (params, callback) {
+        var settings = {
+            data: {
+                token: params.token,
+                pid: params.post_id
+            }
+        };
+        serverRequest("POST", "request/cancel", settings, callback);
+    }
+
 };
 
-altruistApp.angular.controller('altruistAppController', function ($scope, store, $http) {
+altruistApp.angular.controller('altruistAppController', function ($location, $scope, store, $http) {
 
     $scope.user = {
         token: null,
@@ -173,6 +211,8 @@ altruistApp.angular.controller('altruistAppController', function ($scope, store,
         });
         store.remove('userObject');
         $scope.loggedIn = false;
+        $location.path("home");
+        $scope.user = null;
     };
 
     $scope.login = function () {
@@ -263,8 +303,115 @@ altruistApp.angular.controller('dashboardController', function ($scope, $http) {
 
 });
 
-altruistApp.angular.controller('accountController', function ($scope, $http) {
+altruistApp.angular.controller('accountController', function (store, $scope, $http) {
     //Need User Details
+
+
+    $scope.showOverlay = function (overlay) {
+        $scope.noOverlay = false;
+        if (overlay === $scope.overlay.yourItems) {
+            $scope.overlayState.yourItems = true;
+        } else if (overlay === $scope.overlay.borrowRequests) {
+            $scope.overlayState.borrowRequests = true;
+        }
+    };
+
+    $scope.closeOverlay = function () {
+        $scope.init();
+    };
+
+    $scope.acceptRequest = function (id) {
+        var params = {
+            post_id: id,
+            token: $scope.user.token
+        };
+
+        console.log("PARAMS", params);
+
+        altruistApp.requests.acceptRequest(params, function (response) {
+            $scope.safeApply(function () {
+                console.log("REQ ACCEPTED", response);
+                if (response.success) {
+                    $scope.refresh();
+                }
+            });
+        });
+    };
+
+    $scope.cancelSelfRequest = function (id) {
+        var params = {
+            post_id: id,
+            token: $scope.user.token
+        };
+
+        console.log("PARAMS", params);
+
+        altruistApp.requests.cancelSelfRequest(params, function (response) {
+            $scope.safeApply(function () {
+                console.log("REQ CANCELLED", response);
+                if (response.success) {
+                    $scope.refresh();
+                }
+            });
+        });
+    };
+
+    $scope.init = function () {
+
+        $scope.noOverlay = true;
+
+        $scope.overlay = {
+            yourItems: 0,
+            borrowRequests: 1
+        };
+
+        $scope.overlayState = {
+            yourItems: false,
+            borrowRequests: false
+        };
+
+        $scope.currentShow = null;
+
+        $scope.metrics = {
+            requestsGot: null,
+            requestsSent: null,
+            yourItems: null
+        };
+
+        $scope.user = store.get("userObject");
+
+        $scope.refresh();
+    };
+
+    $scope.refresh = function () {
+
+        var params = {
+            token: $scope.user.token
+        };
+
+        altruistApp.requests.getRequests(params, function (response) {
+            $scope.safeApply(function () {
+                $scope.metrics.requestsGot = response;
+                console.log("REQUESTSSSSSSSSSSSSSSS", response);
+            });
+        });
+
+        altruistApp.requests.getRequestsSent(params, function (response) {
+            $scope.safeApply(function () {
+                $scope.metrics.requestsSent = response;
+                console.log("REQUESTSSSSSSSSSSSSSSS SENT", response);
+            });
+        });
+
+        altruistApp.requests.getYourItems(params, function (response) {
+            $scope.safeApply(function () {
+                $scope.metrics.yourItems = response;
+                console.log("MY ITEMSSSSSSSS", response);
+            });
+        });
+    }
+
+    $scope.init();
 
 });
 //code for search
@@ -315,7 +462,6 @@ altruistApp.angular.controller('catalogController', function ($location, $scope,
             clothes: null,
             toys: null
         };
-
 
         $scope.loadSuggestions = function () {
 

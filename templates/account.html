@@ -20,6 +20,7 @@
         display: inline-block;
         vertical-align: top;
         text-align: center;
+        cursor: pointer;
     }
 
     .accountPanel > .fa-user-circle {
@@ -67,39 +68,250 @@
     <div class="section section-header-spacer"></div>
 
 
-    <div class="accountContainer">
-        <div class="accountPanel">
+    <div class="accountContainer" ng-show="noOverlay">
+        <div class="accountPanel animated fadeInUp" style="animation-delay: 0s;">
             <i class="fa fa-user-circle"></i><br>
             <div class="user-name">{{ user.name }}</div>
             <div class="user-email">{{ user.email }}</div>
             <div class="user-community">Illinois Institute of Technology</div>
             <div class="action-button clickable" style="float: unset;">Account Settings</div>
         </div>
-        <div class="accountPanel" style="background: steelblue">
-            <div class="panel-title white" >Notifications</div>
+        <div class="accountPanel animated fadeInUp" style="animation-delay: 0.1s; background: steelblue">
+            <div class="panel-title white">Notifications</div>
             <div class="panel-count white">0</div>
-            <div class="action-button clickable" style="background: white; color: #000; float: unset;">Notification Manager</div>
+            <div class="action-button clickable" style="background: white; color: #000; float: unset;">Notification
+                Manager
+            </div>
         </div>
-        <div class="accountPanel">
+        <div class="accountPanel animated fadeInUp" style="animation-delay: 0.2s;"
+             ng-click="showOverlay(overlay.yourItems)">
             <div class="panel-title">Your Items</div>
-            <div class="panel-count">0</div>
+            <div class="panel-count">{{metrics.yourItems.result.length}}</div>
             <div class="action-button clickable" style="float: unset;">Item Manager</div>
         </div>
-        <div class="accountPanel">
+        <div class="accountPanel animated fadeInUp" style="animation-delay: 0.3s;">
             <div class="panel-title">Borrowed Items</div>
             <div class="panel-count">0</div>
             <div class="action-button clickable" style="float: unset;">Borrow History</div>
         </div>
-        <div class="accountPanel">
+        <div class="accountPanel animated fadeInUp" style="animation-delay: 0.4s;"
+             ng-click="showOverlay(overlay.borrowRequests)">
             <div class="panel-title">Borrow Requests</div>
-            <div class="panel-count">0</div>
-            <div class="action-button clickable" style="float: unset;">Request Now</div>
+            <div class="panel-count">{{metrics.requestsGot.result.length + metrics.requestsSent.result.length}}</div>
+            <div class="action-button clickable" style="float: unset;">View Requests</div>
         </div>
-        <div class="accountPanel" style="background: darkslategray;">
+        <div class="accountPanel animated fadeInUp" style="animation-delay: .5s; background: darkslategray;">
             <div class="panel-title white">Credits Remaining</div>
             <div class="panel-count white">0</div>
             <div class="action-button clickable" style="background: white; color: #000;float: unset;">Earn More</div>
             <div class="action-button clickable" style="background: white; color: #000;float: unset;">Use Now</div>
+        </div>
+    </div>
+
+
+    <style>
+        .accountOverlay {
+            width: 100%;
+            height: 100%;
+            background: white;
+            overflow: auto;
+        }
+
+        .closeButton {
+
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.03);
+            position: fixed;
+            top: 100px;
+            right: 80px;
+            box-sizing: border-box;
+            padding: 20px;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+        .overlayTitle {
+            box-sizing: border-box;
+            padding: 50px 0 30px 100px;
+            font-size: 40px;
+            font-family: Roboto-Light;
+        }
+
+        .borrowRequestContainer {
+            width: 100%;
+            display: inline-block;
+            text-align: left;
+            box-sizing: border-box;
+            padding: 0 80px 0 80px;
+        }
+
+        .borrowRequest {
+            display: inline-block;
+            vertical-align: top;
+            width: 300px;
+            height: 200px;
+            background: red;
+            margin: 10px;
+            box-sizing: border-box;
+            padding: 20px;
+
+        }
+
+        .blue {
+            background: steelblue;
+        }
+
+        .grey {
+            background: #EEE;
+        }
+
+        .item-name, .item-borrower-name, .item-borrower-email {
+            font-size: 20px;
+            font-family: Roboto-Light;
+        }
+
+        .item-name {
+            margin-bottom: 20px;
+        }
+
+        .item-borrower-name, .item-borrower-email, .item-request-date {
+            font-size: 15px;
+        }
+
+        .item-request-date {
+            margin-top: 10px;
+            font-family: Roboto-Regular;
+        }
+
+
+        /*******************/
+
+
+
+        .itemContainer {
+            width: 100%;
+            text-align: center;
+        }
+
+        .item {
+            display: inline-block;
+            box-sizing: border-box;
+            margin: 0px 5px 10px 5px;
+            width: 200px;
+            height: 235px;
+            padding-top: 15px;
+            border-radius: 10px;
+            vertical-align: top;
+            text-align: center;
+            transition: all ease 0.3s;
+            cursor: pointer;
+        }
+
+        .item:hover {
+            background: rgba(0,0,0,0.03);
+        }
+
+        .item-image {
+            display: inline-block;
+            width: 140px;
+            height: 140px;
+            background: #DDD;
+            border: 3px solid #FFF;
+        }
+
+        .item-img {
+            width: 100%;
+            opacity: .05;
+        }
+
+        .item-name {
+            margin-top: 10px;
+            font-size: 18px;
+            font-family: Roboto-Light;
+        }
+
+        .item-author {
+            margin-top: 5px;
+            font-size: 12px;
+            font-family: Roboto-Light;
+            text-transform: uppercase;
+        }
+
+        .item-category {
+            display: inline-block;
+            position: relative;
+            z-index: 200;
+            background: #333;
+            text-transform: uppercase;
+            font-family: Roboto-Light;
+            font-size: 12px;
+            color: white;
+            padding: 7px;
+            box-sizing: border-box;
+            width: 100%;
+            margin-top: -28px;
+        }
+
+
+        /*******************/
+
+    </style>
+
+    <div class="accountOverlay" ng-show="!noOverlay">
+        <div class="closeButton" ng-click="closeOverlay()">
+            CLOSE &nbsp; <i class="fa fa-close"></i>
+        </div>
+
+        <div ng-show="overlayState.borrowRequests">
+            <div class="overlayTitle">Borrow Requests</div>
+
+
+            <div class="borrowRequestContainer" ng-show="metrics.requestsGot.result.length + metrics.requestsSent.result.length > 0">
+                <div class="borrowRequest blue" ng-repeat="request in metrics.requestsGot.result">
+                    <div class="item-name">{{request.post[0].name}}</div>
+                    <div class="item-borrower-name">{{request.borrower[0].name}}</div>
+                    <div class="item-borrower-email">{{request.borrower[0].email}}</div>
+                    <div class="item-request-date">Requested Today</div>
+                    <div class="action-button clickable" style="float: unset; background: #EEE; color: #333;" ng-click="acceptRequest(request.post[0]._id)">Accept Request</div>
+
+                </div>
+                <div class="borrowRequest grey" ng-repeat="request in metrics.requestsSent.result">
+                    <div class="item-name">{{request.post[0].name}}</div>
+                    <div class="item-borrower-name">{{request.poster[0].name}}</div>
+                    <div class="item-borrower-email">{{request.poster[0].email}}</div>
+                    <div class="item-request-date">Requested Today</div>
+                    <div class="action-button clickable" style="float: unset;" ng-click="cancelSelfRequest(request.post[0]._id)">Cancel Request</div>
+                </div>
+            </div>
+
+            <div  ng-show="metrics.requestsGot.result.length + metrics.requestsSent.result.length == 0"
+                  class="overlayTitle" style="font-size: 30px; font-family: Roboto-Thin;">There are no requests.</div>
+        </div>
+
+        <div ng-show="overlayState.yourItems">
+            <div class="overlayTitle">Your Items
+                <div class="action-button" style="float: unset;">Add Items</div></div>
+
+
+
+            <div class="itemContainer" ng-show="metrics.yourItems.result.length > 0">
+                <div ng-repeat="item in metrics.yourItems.result" class="item animated fadeInRight" style="animation-delay: {{0.1*$index}}s"  ng-click="itemClick(item._id)">
+
+                    <div class="item-image">
+                        <img src="images/logo-menu.png" class="item-img">
+                        <div class="item-category">{{item.category}}</div>
+                    </div>
+                    <div class="item-name">{{item.name}}</div>
+                    <div class="item-author">{{item.attributes[0].Author}}</div>
+
+                </div>
+            </div>
+
+
+            <div  ng-show="metrics.yourItems.result.length == 0"
+                  class="overlayTitle" style="font-size: 30px; font-family: Roboto-Thin;">You haven't added any items.</div>
+
+
         </div>
     </div>
 </div>

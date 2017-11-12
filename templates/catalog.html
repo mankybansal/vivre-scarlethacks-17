@@ -167,13 +167,42 @@
         font-size: 30px;
         font-family: Roboto-Light;
     }
+
+
+
+    .purple {
+        background: rebeccapurple;
+        color: white;
+    }
+
+    .blue {
+        background: steelblue;
+        color: white;
+    }
+
+    .green {
+        background: darkolivegreen;
+        color: white;
+    }
+
+    .brown {
+        background: saddlebrown;
+        color: white;
+    }
+
+    .red {
+        background: darkred;
+        color: white;
+    }
+
+
 </style>
 
 <div class="trendingContainer">
-    <div class="trendingTitle">Items that are <span style="font-family: Roboto-Regular;">#trending</span></div>
+    <div class="trendingTitle">Items that are <span style="font-family: Roboto-Regular;">#trending</span> at Illinois Tech</div>
 
     <div class="itemContainer">
-        <div class="item" ng-repeat="item in trending_items" ng-click="itemClick(item._id)">
+        <div ng-repeat="item in trending_items" class="item animated fadeInRight" style="animation-delay: {{0.1*$index}}s"  ng-click="itemClick(item._id)">
 
             <div class="item-image">
                 <img src="images/logo-menu.png" class="item-img">
@@ -186,7 +215,7 @@
     </div>
 </div>
 
-<div class="searchContainer">
+<div class="searchContainer animated fadeIn">
     <input type="text" class="searchBar" ng-keyup="autoSearch();" ng-init="count=0"
            placeholder="Search for Products, Authors and More" name="searchVal" ng-model="searchVal">
     <div class="searchBtn clickable" ng-click="search()">
@@ -194,7 +223,7 @@
     </div>
 
     <div class="autoComplete" ng-show="autoComplete">
-        <div class="autoComplete-record clickable" ng-repeat="result in autoComplete" ng-if="$index < 5">
+        <div class="autoComplete-record clickable" ng-repeat="result in autoComplete" ng-if="$index < 5" ng-click="itemClick(result._id)">
             {{result.name}}
         </div>
     </div>
@@ -207,10 +236,10 @@
     </div>
 
     <div class="itemContainer">
-        <div class="item" ng-repeat="item in suggestions.books" ng-if="$index < 5"  ng-click="itemClick(item._id)">
+        <div ng-repeat="item in suggestions.books" ng-if="$index < 5"  class="item animated fadeInRight" style="animation-delay: {{0.1*$index}}s"   ng-click="itemClick(item._id)">
             <div class="item-image">
                 <img src="images/logo-menu.png" class="item-img">
-                <div class="item-category">{{item.category}}</div>
+                <div class="item-category purple">{{item.category}}</div>
             </div>
             <div class="item-name">{{item.name}}</div>
             <div class="item-author">{{item.attributes[0].Author}}</div>
@@ -224,10 +253,10 @@
     </div>
 
     <div class="itemContainer">
-        <div class="item" ng-repeat="item in suggestions.games" ng-if="$index < 5"  ng-click="itemClick(item._id)">
+        <div ng-repeat="item in suggestions.games" ng-if="$index < 5"  class="item animated fadeInRight" style="animation-delay: {{0.1*$index}}s"   ng-click="itemClick(item._id)">
             <div class="item-image">
                 <img src="images/logo-menu.png" class="item-img">
-                <div class="item-category">{{item.category}}</div>
+                <div class="item-category blue">{{item.category}}</div>
             </div>
             <div class="item-name">{{item.name}}</div>
             <div class="item-author">{{item.attributes[0].Publisher + " . "}}
@@ -243,10 +272,10 @@
     </div>
 
     <div class="itemContainer">
-        <div class="item" ng-repeat="item in suggestions.household" ng-if="$index < 5"  ng-click="itemClick(item._id)">
+        <div ng-repeat="item in suggestions.household" ng-if="$index < 5"  class="item animated fadeInRight" style="animation-delay: {{0.1*$index}}s"   ng-click="itemClick(item._id)">
             <div class="item-image">
                 <img src="images/logo-menu.png" class="item-img">
-                <div class="item-category">{{item.category}}</div>
+                <div class="item-category green">{{item.category}}</div>
             </div>
             <div class="item-name">{{item.name}}</div>
             <div class="item-author">{{item.attributes[0].manufacture}}</div>
@@ -260,10 +289,10 @@
     </div>
 
     <div class="itemContainer">
-        <div class="item" ng-repeat="item in suggestions.toys" ng-if="$index < 5"  ng-click="itemClick(item._id)">
+        <div ng-repeat="item in suggestions.toys" ng-if="$index < 5"  class="item animated fadeInRight" style="animation-delay: {{0.1*$index}}s"   ng-click="itemClick(item._id)">
             <div class="item-image">
                 <img src="images/logo-menu.png" class="item-img">
-                <div class="item-category">{{item.category}}</div>
+                <div class="item-category brown">{{item.category}}</div>
             </div>
             <div class="item-name">{{item.name}}</div>
             <div class="item-author">{{item.attributes[0].Author}}</div>
@@ -277,10 +306,10 @@
     </div>
 
     <div class="itemContainer">
-        <div class="item" ng-repeat="item in suggestions.clothes" ng-if="$index < 5"  ng-click="itemClick(item._id)">
+        <div ng-repeat="item in suggestions.clothes" ng-if="$index < 5"  class="item animated fadeInRight" style="animation-delay: {{0.1*$index}}s"   ng-click="itemClick(item._id)">
             <div class="item-image">
                 <img src="images/logo-menu.png" class="item-img">
-                <div class="item-category">{{item.category}}</div>
+                <div class="item-category red">{{item.category}}</div>
             </div>
             <div class="item-name">{{item.name}}</div>
             <div class="item-author">{{item.attributes[0].size + " . " + item.attributes[0].color }}</div>

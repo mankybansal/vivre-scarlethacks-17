@@ -1,10 +1,11 @@
 <div class="section section-header-spacer"></div>
 
 
+<img src ="{{currentProduct.image_url}}" style="height: 300px; width: 300px;">
 {{ currentProduct.name}}<br>
 {{ currentProduct.category}}<br>
 {{ currentProduct.description}}<br>
 
 {{ "Owner: " + currentProduct.user[0].name}}<br>
 
-<div class="action-button" style="float: left;" ng-click="borrowNow()">Borrow Now</div>
+<div class="action-button" style="float: left;" ng-show="currentProduct.user[0]._id != user._id" ng-click="borrowNow()">Borrow Now</div>
