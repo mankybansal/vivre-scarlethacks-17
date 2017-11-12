@@ -1,11 +1,52 @@
 <div class="section section-header-spacer"></div>
 
 
-<img src ="{{currentProduct.image_url}}" style="height: 300px; width: 300px;">
-{{ currentProduct.name}}<br>
-{{ currentProduct.category}}<br>
-{{ currentProduct.description}}<br>
+<div style="width: 300px; height: 300px; float: left; background: #333; margin-top: 50px; margin-left: 70px; box-shadow: 0 0 20px rgba(0,0,0,0.4);">
+    <img src="{{ currentProduct.image_url }}" style="height: 300px; width: 300px;">
+</div>
 
-{{ "Owner: " + currentProduct.user[0].name}}<br>
+<div style="float: left; margin-top: 50px; margin-left: 50px;">
 
-<div class="action-button" style="float: left;" ng-show="currentProduct.user[0]._id != user._id" ng-click="borrowNow()">Borrow Now</div>
+    <div style="font-family: Roboto-Light; font-size: 45px;">{{ currentProduct.name}}</div>
+    <div style="font-family: Roboto-Thin; font-size: 20px;">{{ currentProduct.category}}</div>
+    <div style="font-family: Roboto-Thin; margin-top: 20px;"><i class="fa fa-user-circle"></i>&nbsp;{{ "Owner: " +
+        currentProduct.user[0].name}}
+    </div>
+    <br>
+    <div style="font-family: Roboto-Thin; margin-top: 20px;">Illinois Institute of Technology</div>
+    <br>
+
+    <i class="fa fa-star"></i>
+    <i class="fa fa-star"></i>
+    <i class="fa fa-star"></i>
+    <i class="fa fa-star"></i>
+    <i class="fa fa-star-half-empty"></i>
+
+    <br>
+    <br>
+
+    <div class="action-button" style="float: left;" ng-show="currentProduct.user[0]._id != user._id"
+         ng-click="borrowNow()">
+        Borrow Now
+    </div>
+
+
+    <div style="font-family: Roboto-Light; font-size: 20px; margin-top: 20px;"
+         ng-show=" currentProduct.user[0]._id== user._id">
+        You cannot borrow your own item.
+    </div>
+
+</div>
+
+<div style="width: 100%; height: 500px; margin-top: 380px; background :white; box-sizing: border-box; padding: 50px 70px 50px 70px;">
+
+
+    <div style="font-family: Roboto-Light; font-size: 35px;">Description</div>
+    <div style="font-family: Roboto-Thin; font-size: 20px; margin-top: 15px;">{{ currentProduct.description}}</div>
+    <br><br>
+    <br><br>
+    <div style="font-family: Roboto-Light; font-size: 35px;">Reviews</div>
+    <div style="font-family: Roboto-Thin; font-size: 20px; margin-top: 15px;">No Reviews Available</div>
+
+
+</div>

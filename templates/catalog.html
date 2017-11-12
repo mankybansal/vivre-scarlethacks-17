@@ -51,8 +51,8 @@
     }
 
     .item-img {
-        width: 100%;
-        opacity: .05;
+        height: 100%;
+        opacity: 1;
     }
 
     .item-name {
@@ -205,7 +205,7 @@
         <div ng-repeat="item in trending_items" class="item animated fadeInRight" style="animation-delay: {{0.1*$index}}s"  ng-click="itemClick(item._id)">
 
             <div class="item-image">
-                <img src="images/logo-menu.png" class="item-img">
+                <img src="{{ item.image_url }}" class="item-img">
                 <div class="item-category">{{item.category}}</div>
             </div>
             <div class="item-name">{{item.name}}</div>
@@ -238,7 +238,7 @@
     <div class="itemContainer">
         <div ng-repeat="item in suggestions.books" ng-if="$index < 5"  class="item animated fadeInRight" style="animation-delay: {{0.1*$index}}s"   ng-click="itemClick(item._id)">
             <div class="item-image">
-                <img src="images/logo-menu.png" class="item-img">
+                <img src="{{ item.image_url }}" class="item-img">
                 <div class="item-category purple">{{item.category}}</div>
             </div>
             <div class="item-name">{{item.name}}</div>
@@ -255,7 +255,7 @@
     <div class="itemContainer">
         <div ng-repeat="item in suggestions.games" ng-if="$index < 5"  class="item animated fadeInRight" style="animation-delay: {{0.1*$index}}s"   ng-click="itemClick(item._id)">
             <div class="item-image">
-                <img src="images/logo-menu.png" class="item-img">
+                <img src="{{ item.image_url }}" class="item-img">
                 <div class="item-category blue">{{item.category}}</div>
             </div>
             <div class="item-name">{{item.name}}</div>
@@ -274,7 +274,7 @@
     <div class="itemContainer">
         <div ng-repeat="item in suggestions.household" ng-if="$index < 5"  class="item animated fadeInRight" style="animation-delay: {{0.1*$index}}s"   ng-click="itemClick(item._id)">
             <div class="item-image">
-                <img src="images/logo-menu.png" class="item-img">
+                <img src="{{ item.image_url }}" class="item-img">
                 <div class="item-category green">{{item.category}}</div>
             </div>
             <div class="item-name">{{item.name}}</div>
@@ -291,7 +291,7 @@
     <div class="itemContainer">
         <div ng-repeat="item in suggestions.toys" ng-if="$index < 5"  class="item animated fadeInRight" style="animation-delay: {{0.1*$index}}s"   ng-click="itemClick(item._id)">
             <div class="item-image">
-                <img src="images/logo-menu.png" class="item-img">
+                <img src="{{ item.image_url }}" class="item-img">
                 <div class="item-category brown">{{item.category}}</div>
             </div>
             <div class="item-name">{{item.name}}</div>
@@ -308,7 +308,7 @@
     <div class="itemContainer">
         <div ng-repeat="item in suggestions.clothes" ng-if="$index < 5"  class="item animated fadeInRight" style="animation-delay: {{0.1*$index}}s"   ng-click="itemClick(item._id)">
             <div class="item-image">
-                <img src="images/logo-menu.png" class="item-img">
+                <img src="{{ item.image_url }}" class="item-img">
                 <div class="item-category red">{{item.category}}</div>
             </div>
             <div class="item-name">{{item.name}}</div>

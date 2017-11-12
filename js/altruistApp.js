@@ -8,7 +8,7 @@ var altruistApp = {
         pageNotFound: 5
     },
     currentPage: null,
-    nodeURL: 'http://vivre.manky.me:3000/',
+    nodeURL: 'http://altruist.manky.me:3000/',
     angular: angular.module("altruistApp", ["ngRoute", "angular-storage"])
 };
 
@@ -430,6 +430,7 @@ altruistApp.angular.controller('catalogController', function ($location, $scope,
             altruistApp.requests.trendingSearch(function (response) {
                 $scope.safeApply(function () {
                     $scope.trending_items = response.result;
+                    $.adaptiveBackground.run();
                 });
 
             })
