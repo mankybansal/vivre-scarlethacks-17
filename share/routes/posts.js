@@ -17,7 +17,7 @@ router.post('/',function(req,res){
          if(req.body.category == "Video Games"){
              attributes = {Publisher:req.body.pub,rating:req.body.rating,genre:req.body.genre}
          }
-         if(req.body.categoy == "Toys"){
+         if(req.body.category == "Toys"){
              attributes = {Age:req.body.age,manufacture: req.body.man}
          }
          if(req.body.category == "Household"){
