@@ -72,3 +72,7 @@ $(window).scroll(function(){
         console.log("YES");
     }
 });
+
+$(document).ready(function(){
+    $.adaptiveBackground.run();
+});
