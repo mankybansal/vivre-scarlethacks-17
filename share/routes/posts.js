@@ -27,7 +27,7 @@ router.post('/',function(req,res){
              attributes = {size:req.body.size, color: req.body.color}
          }
         
-         if(req.body.image_url != null){
+         if(req.body.image_url){
              image_url = req.body.image_url;
          }else{
              image_url = "placeholder"
