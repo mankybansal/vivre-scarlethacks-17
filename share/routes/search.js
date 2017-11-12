@@ -63,5 +63,24 @@ router.get('/by/category/:name',function(req,res){
 				}
 });
 });
+router.get('/by/id/:id',function(req,res){
+    var name = req.params.id;
+    Post.findOne({_id:name},function(err,docs){
+				if(err)
+				{
+					return res.json({success:false,message:"Unknown Error"})
+				}
+				else if(docs.length == 0)
+				{
+					return res.json({success:false,message:"No Ads match your Search Condition"});
+				}
+				else
+				{
+					return res.json({success:true,result:docs});
+
+				}
+});
+});
+
 
 module.exports = router;
