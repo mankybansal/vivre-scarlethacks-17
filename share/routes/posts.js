@@ -21,7 +21,8 @@ router.post('/',function(req,res){
         user: docs,
         category: req.body.category,
 		attributes:attributes,
-        status:req.body.status
+        status:req.body.status,
+        deleted:"false"
 
 	});
          post.save(function(err){
