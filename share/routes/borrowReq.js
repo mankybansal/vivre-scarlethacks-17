@@ -67,4 +67,15 @@ router.get('/',function(req,res){
     })
 });
 
+router.get('/lent',function(req,res){
+    var email - req.decoded;
+    BorrowReq.find({"borrower.email":email},function(err,docs){
+        if(err){
+            return res.json({success:false,message:err});
+        }else{
+            return res.json({success:true,result:docs});
+        }
+    })
+})
+
 module.exports = router;
