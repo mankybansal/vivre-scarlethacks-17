@@ -89,6 +89,8 @@ altruistApp.requests = {
         var settings = {};
         serverRequest("GET", "community", settings, callback);
     }
+
+
 };
 
 altruistApp.angular.controller('altruistAppController', function ($scope, store, $http) {
@@ -226,5 +228,6 @@ altruistApp.angular.controller('catalogController', function ($scope, $http) {
 });
 
 altruistApp.angular.controller('accountController', function ($scope, $http) {
-
+    //Need User Details
+    
 });

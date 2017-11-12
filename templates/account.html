@@ -1,26 +1,7 @@
-<html>
-	<head>
-
-		<link rel="stylesheet" href="css/accountcss.css">
-		<!-- Compiled and minified CSS -->
-
-	</head>
-	<body class="" ng-app="accountApp" ng-controller="mainController">
+	<link rel="stylesheet" href="css/accountcss.css">
+	
+	<div class="" ng-app="accountApp" ng-controller="accountController">
 		<!--To make profile for users-->
-		<div class="" id="" ng-model="account">
-			<div>
-				<!-- Nav Bar for Account -->
-				<nav>
-				    <div class="nav-wrapper">
-				      <a href="#" class="brand-logo">Logo</a>
-				      <ul id="nav-mobile" class="right hide-on-med-and-down">
-				        <li><a href="dashboard.html">Dashboard</a></li>
-				        <li><a href="catalog.html">Catalog</a></li>
-				      </ul>
-				    </div>
-				  </nav>
-			</div>
-
 			<!-- To have the profile picture here -->
 			<div class="marginDist">
 				<div class="row">
@@ -32,7 +13,7 @@
 						<div>
 							<p class="headingstyle shadowBox" style="text-align:left;">User Details</p>
 							<ul>
-								<li class="subHeadingStyle" >Name</li>
+								<li class="subHeadingStyle" >{{user.name}}</li>
 								<li class="subHeadingStyle">Contact Info</li>
 								<li class="subHeadingStyle">Rating</li>
 							</ul>
@@ -60,15 +41,9 @@
 			</div>
 		</div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-storage/0.0.15/angular-storage.min.js"></script>
-	    <script src="https://ajax.googleapis.com/ajax/libs/angular-ui-router/1.0.0-rc.1/angular-ui-router.min.js"></script>
-	    
-		<script type="text/javascript" src="../js/accountApp.js"></script>
+
+		<!--<script type="text/javascript" src="../js/accountApp.js"></script>-->
 		
 		<!-- Compiled and minified JavaScript -->
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-	</body>
-</html>
+</div>
