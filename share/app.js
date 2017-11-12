@@ -54,8 +54,8 @@ io.on('connection', function (socket) {
     io.sockets.emit('message', data);
     console.log(barcode);
     walmart.getItemByUPC(data).then(function(item) {
-    console.log(item.product.productName);
-        
+    console.log(item.product);
+         
 });
 
 

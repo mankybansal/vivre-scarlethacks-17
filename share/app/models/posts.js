@@ -13,7 +13,8 @@ var PostSchema = new Schema({
     updated_at    : { type: Date },
     borrower:[{ type: Schema.Types.Mixed, ref: 'Community' }],
     deleted:{type:String,required:true},
-    borrower_count:{type: Number,default : 0}
+    borrower_count:{type: Number,default : 0},
+    image_url:{type:String}
 });
 module.exports = mongoose.model('Post',PostSchema);
 
