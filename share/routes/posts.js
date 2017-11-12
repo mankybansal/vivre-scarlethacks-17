@@ -26,7 +26,12 @@ router.post('/',function(req,res){
          if(req.body.category == "Clothes"){
              attributes = {size:req.body.size, color: req.body.color}
          }
-         
+        
+         if(req.body.image_url != null){
+             image_url = req.body.image_url;
+         }else{
+             image_url = "placeholder"
+         }
         var post = new Post({
 		name:req.body.name,
 		description: req.body.desc,
@@ -34,7 +39,8 @@ router.post('/',function(req,res){
         category: req.body.category,
 		attributes:attributes,
         status:req.body.status,
-        deleted:"false"
+        deleted:"false",
+            image_url :image_url
 
 	});
          post.save(function(err){
