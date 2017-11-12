@@ -15,29 +15,28 @@ router.post('/',function(req,res){
     borrower = {};
     post = {};
     User.findOne({email:email},function(err,users){
+        if(users.length == 0){
+            return res.json({success:false,result:[]});
+        }
+        //borrower = users;
+        User.findOne({_id:poster_id},function(err,docs){
         if(docs.length == 0){
             return res.json({success:false,result:[]});
         }
-        borrower = users;
-    });
-    User.findOne({_id:poster_id},function(err,docs){
-        if(docs.length == 0){
-            return res.json({success:false,result:[]});
-        }
-        poster = docs;
-    });
-    Post.findOne({_id:post_id},function(err,posts){
-        post = posts;
-    })
-    console.log(post);
-    console.log(poster);
-    var borrowReq = new BorrowReq({
-        borrower:borrower,
-        poster:poster,
-        post:post,
-        accepted: "false"
+        //poster = docs;
+        Post.findOne({_id:post_id},function(err,posts){
+        //post = posts;
+            var borrowReq = new BorrowReq({
+            borrower:users,
+            poster:docs,
+            post:posts,
+            accepted: "false"
         
+            }); 
+            })
+        });
     });
+   
     borrowReq.save(function(err){
         if(err){
             return res.json({success:false,message:err});
