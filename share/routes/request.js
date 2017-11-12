@@ -55,4 +55,20 @@ router.post('/release',function(req,res){
       });
     });
 });
+router.post('/cancel',function(req,res){
+    var email = req.decoded;
+    var postid = req.body.pid;
+    console.log(postid);
+    var empty={}
+   BorrowReq.findOneAndRemove({"post._id":mongoose.Types.ObjectId(postid)},function(err,borrowReq){
+                         if(err)
+                            return res.json(err);
+                         else{
+                             return res.json({success:true,message:"Deleted Successfully"});
+                         }
+
+                     });
+});
+
+
 module.exports = router;
