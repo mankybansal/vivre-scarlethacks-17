@@ -17,7 +17,7 @@ router.post('/',function(req,res){
           if(err){
               return res.json(err);
           }
-                 BorrowReq.findOne({"post._id":postid},function(err,borrowReq){
+                 BorrowReq.findOne({"post[0]._id":postid},function(err,borrowReq){
                      borrowReq.update({accepted:"true"},function(err){
                          if(err)
                             return res.json(err);
