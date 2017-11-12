@@ -20,6 +20,7 @@ var posts   = require('./routes/posts');
 var search = require('./routes/search');
 var barcode = require('./routes/barcode');
 var request = require('./routes/request');
+var borrowReq = require('./routes/borrowReq');
 var app = express();
 var io = require('socket.io').listen(app.listen(3003));
 var walmart = require('walmart')('zbs8p568qpq4qyrbf2a5kev2');
@@ -117,6 +118,7 @@ function authenticate(req,res,next){
 app.use('/users',authenticate, users);
 app.use('/posts',authenticate,posts);
 app.use('/request',authenticate,request);
+app.use('/borrowReq',authenticate,borrowReq);
 
 
 // catch 404 and forward to error handler

@@ -1,0 +1,48 @@
+var express = require('express');
+var router = express.Router();
+var User = require('../app/models/user');
+var borrowReq = require('../app/models/borrowReq');
+var Post = require('../app/models/posts');
+var mongoose = require('mongoose');
+
+router.get('/',function(req,res){
+    var email = req.decoded;
+    var poster_id = req.params.poster_id;
+    var post_id = req.params.post_id;
+    poster = [];
+    borrower = [];
+    post = [];
+    User.findOne({email:email},function(err,docs){
+        if(docs.length == 0){
+            return res.json({success:false,result:[]});
+        }
+        borrower = docs;
+    });
+    User.findOne({_id:poster_id},function(err,docs){
+        if(docs.length == 0){
+            return res.json({success:false,result:[]});
+        }
+        poster = docs;
+    });
+    Post.findOne({_id:post_id},function(err,docs){
+        post = docs;
+    })
+    var borrowReq = new borrowReq({
+        borrower:borrower,
+        poster:poster,
+        post:post,
+        accepted: "false"
+        
+    });
+    borrowReq.save(function(err){
+        if(err){
+            return res.json({success:false,message:err});
+        }else{
+            return res.json({success:true,message:"Req Successfully",req:borrowReq})
+        }
+    });
+    
+    
+});
+
+module.exports = router;
