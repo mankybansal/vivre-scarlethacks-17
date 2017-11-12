@@ -3,11 +3,7 @@ var router = express.Router();
 var User = require('../app/models/user');
 var jwt    = require('jsonwebtoken');
 
-router.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+
 
 
 
@@ -17,13 +13,14 @@ router.post('/', function(req, res, next) {
     console.log(token);
     User.findOne({token:token},function(err,docs){
         
-        var token = jwt.sign(docs.email,"karthic",{
-						expiresIn:"365d"
-					});
         
-        if(docs.length ===0 ){
+        
+        if(!docs ){
             return res.json({success:false,result:[]});
         }else{
+            var token = jwt.sign(docs.email,"karthic",{
+						expiresIn:"365d"
+					});
             return res.json({success:true,result:docs,token:token});
         }
         
