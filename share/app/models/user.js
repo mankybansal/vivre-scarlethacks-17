@@ -9,8 +9,8 @@ var UserSchema = new Schema({
 	email : { type: String, required : true},
 	phoneNo:{ type:String, required:true},
 	aNo : { type: String,required: true},
-    bNumber: {type: String, required: true},
-    city:{ type: String, required: true},
+    bNumber: {type: String},
+    city:{ type: String},
     community: [{ type: Schema.Types.Mixed, ref: 'Community' }]
   
 });

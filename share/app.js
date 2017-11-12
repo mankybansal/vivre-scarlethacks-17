@@ -14,7 +14,14 @@ var users = require('./routes/users');
 var login = require('./routes/login');
 var register = require('./routes/register');
 var communities = require('./routes/community');
+var posts   = require('./routes/posts');
+var search = require('./routes/search');
+var barcode = require('./routes/barcode');
 var app = express();
+var io = require('socket.io').listen(app.listen(3003));
+var walmart = require('walmart')('zbs8p568qpq4qyrbf2a5kev2');
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,11 +35,45 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+io.on('connection', function (socket) {
+    console.log('client connect');
+     id = socket.id
+     console.log("id"+id)
+
+    socket.on('barcode', function (data) {
+    app.get('/barcode/:barcode',barcode)
+    io.sockets.emit('message', data);
+    console.log(barcode);
+    walmart.getItemByUPC(data).then(function(item) {
+    console.log(item.product.productName);
+        
+});
+
+
+ });
+});
+app.use(function(req,res,next){
+    req.io = io;
+    req.id = id;
+    next();
+});
+
+
+
+
 app.use('/', index);
 
 app.use('/login',login);
 app.use('/register',register);
-//app.use('/community',communities);
+app.use('/community',communities);
+app.use('/search',search);
+app.use('/barcode',barcode);
 
 
 function authenticate(req,res,next){
@@ -65,8 +106,7 @@ function authenticate(req,res,next){
   }
 };
 app.use('/users',authenticate, users);
-app.use('/community',authenticate,communities);
-
+app.use('/posts',authenticate,posts);
 
 
 // catch 404 and forward to error handler
