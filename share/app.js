@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose  = require('mongoose');
 var jwt    = require('jsonwebtoken');
+var User = require('.//app/models/user');
+var Post = require('.//app/models/posts');
 
 mongoose.connect('mongodb://localhost:27017/scarlethacks');
 
@@ -18,6 +20,7 @@ var posts   = require('./routes/posts');
 var search = require('./routes/search');
 var barcode = require('./routes/barcode');
 var request = require('./routes/request');
+var borrowReq = require('./routes/borrowReq');
 var app = express();
 var io = require('socket.io').listen(app.listen(3003));
 var walmart = require('walmart')('zbs8p568qpq4qyrbf2a5kev2');
@@ -54,12 +57,16 @@ io.on('connection', function (socket) {
     io.sockets.emit('message', data);
     console.log(barcode);
     walmart.getItemByUPC(data).then(function(item) {
-    console.log(item.product.productName);
-        
+    console.log(item.product);
+         
 });
 
 
  });
+    socket.on('update-url',function(data){
+        console.log(data);
+        console.log(data[0]);
+    })
 });
 app.use(function(req,res,next){
     req.io = io;
@@ -111,6 +118,7 @@ function authenticate(req,res,next){
 app.use('/users',authenticate, users);
 app.use('/posts',authenticate,posts);
 app.use('/request',authenticate,request);
+app.use('/borrowReq',authenticate,borrowReq);
 
 
 // catch 404 and forward to error handler
