@@ -324,9 +324,52 @@
             </div>
         </div>
 
+
+
+        <div ng-show="overlayState.addItem" style="box-sizing: border-box; padding-left: 100px;">
+            <div class="overlayTitle" style="margin-left: -50px;">Add New Item
+            </div>
+
+            <select  class="inputBox" style="width: 600px;">
+                <option disabled selected>What do you want to do?</option>
+                <option>Lend</option>
+                <option>Give Away</option>
+                <option>Donate</option>
+            </select>
+
+            <br>
+            <select  class="inputBox" style="width: 600px;">
+                <option disabled selected>Select Category</option>
+                <option>Books and Reading</option>
+                <option>Video Games</option>
+                <option>Houshold</option>
+                <option>Toys</option>
+                <option>Clothes</option>
+            </select>
+
+
+
+            <br>
+            <input type="textbox" style="width: 600px;" class="inputBox" placeholder="Title"><br>
+            <input type="textbox" style="width: 600px;" class="inputBox" placeholder="Author/Manufacturer/Publisher"><br>
+            <input type="textbox" style="width: 600px;" class="inputBox" placeholder="Description">
+
+            <br>
+
+            <div class="action-button clickable grey" style="float: left; padding: 10px 30px 10px 30px; font-szie: 20px; color: #333">Add Pictures</div>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="action-button clickable grey" style="float: left; color: #333">Cancel</div>
+            <div class="action-button clickable" style="float: left;">Add Item</div>
+
+        </div>
+
         <div ng-show="overlayState.yourItems">
             <div class="overlayTitle">Your Items
-                <div class="action-button" style="float: unset;">Add Items</div>
+                <div class="action-button clickable" style="float: unset;" ng-click="showOverlay(overlay.addItem)">Add Items</div>
             </div>
 
 
@@ -349,5 +392,9 @@
                  class="overlayTitle" style="font-size: 30px; font-family: Roboto-Thin;">You haven't added any items.
             </div>
         </div>
+
+
+
+
     </div>
 </div>

@@ -334,6 +334,9 @@ altruistApp.angular.controller('accountController', function (store, $scope, $ht
             $scope.overlayState.borrowRequests = true;
         }else if (overlay === $scope.overlay.borrows) {
             $scope.overlayState.borrows = true;
+        }else if (overlay === $scope.overlay.addItem) {
+            $scope.overlayState.yourItems = false;
+            $scope.overlayState.addItem = true;
         }
     };
 
@@ -384,13 +387,15 @@ altruistApp.angular.controller('accountController', function (store, $scope, $ht
         $scope.overlay = {
             yourItems: 0,
             borrowRequests: 1,
-            borrows: 2
+            borrows: 2,
+            addItem: 3
         };
 
         $scope.overlayState = {
             yourItems: false,
             borrowRequests: false,
-            borrows: false
+            borrows: false,
+            addItem: false
         };
 
         $scope.currentShow = null;
