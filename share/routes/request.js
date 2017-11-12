@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require('../app/models/user');
 var Post = require('../app/models/posts');
 var mongoose = require('mongoose');
+var BorrowReq = require('../app/models/borrowReq');
 
 router.post('/',function(req,res){
     var email = req.decoded;
@@ -16,9 +17,20 @@ router.post('/',function(req,res){
           if(err){
               return res.json(err);
           }
+                 BorrowReq.findOne({"post._id":postid},function(err,borrowReq){
+                     borrowReq.update({accepted:"true"},function(err){
+                         if(err)
+                            return res.json(err);
+                         else{
+                             return res.json({success:true,message:"Updated Successfully",post:newPost});
+                         }
+
+                     })
+                 })
            
-           return res.json({success:true,message:"Updated Successfully",post:newPost});
+           
           })
+        
 
       });
     });
