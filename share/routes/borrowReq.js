@@ -11,14 +11,14 @@ router.post('/',function(req,res){
     var post_id = req.body.post_id;
     console.log(poster_id);
     console.log(post_id);
-    poster = [];
-    borrower = [];
-    post = [];
-    User.findOne({email:email},function(err,docs){
+    poster = {};
+    borrower = {};
+    post = {};
+    User.findOne({email:email},function(err,users){
         if(docs.length == 0){
             return res.json({success:false,result:[]});
         }
-        borrower = docs;
+        borrower = users;
     });
     User.findOne({_id:poster_id},function(err,docs){
         if(docs.length == 0){
@@ -26,9 +26,11 @@ router.post('/',function(req,res){
         }
         poster = docs;
     });
-    Post.findOne({_id:post_id},function(err,docs){
-        post = docs;
+    Post.findOne({_id:post_id},function(err,posts){
+        post = posts;
     })
+    console.log(post);
+    console.log(poster);
     var borrowReq = new BorrowReq({
         borrower:borrower,
         poster:poster,
