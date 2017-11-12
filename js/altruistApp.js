@@ -171,21 +171,24 @@ altruistApp.requests = {
 
 altruistApp.angular.controller('altruistAppController', function ($location, $scope, store, $http) {
 
-    $scope.user = {
-        token: null,
-        name: null,
-        email: null,
-        phoneNo: null,
-        aNo: null,
-        bNumber: null,
-        city: null,
-        community: null
-    };
 
-    $scope.communities = null;
-    $scope.requireRegister = false;
-    $scope.loginOverlay = false;
-    $scope.loggedIn = false;
+    $scope.init = function(){
+        $scope.user = {
+            token: null,
+            name: null,
+            email: null,
+            phoneNo: null,
+            aNo: null,
+            bNumber: null,
+            city: null,
+            community: null
+        };
+
+        $scope.communities = null;
+        $scope.requireRegister = false;
+        $scope.loginOverlay = false;
+        $scope.loggedIn = false;
+    };
 
 
     $scope.onSignIn = function (googleUser) {
@@ -195,10 +198,8 @@ altruistApp.angular.controller('altruistAppController', function ($location, $sc
         console.log('Image URL: ' + profile.getImageUrl());
         console.log('Email: ' + profile.getEmail());
 
-        $scope.user.token = profile.getId();
         $scope.user.email = profile.getEmail();
         $scope.user.name = profile.getName();
-
         $scope.user.token = profile.getId();
 
         $scope.login();
@@ -213,6 +214,7 @@ altruistApp.angular.controller('altruistAppController', function ($location, $sc
         $scope.loggedIn = false;
         $location.path("home");
         $scope.user = null;
+        $scope.init();
     };
 
     $scope.login = function () {
@@ -293,6 +295,7 @@ altruistApp.angular.controller('altruistAppController', function ($location, $sc
         $scope.loginOverlay = false;
     };
 
+    $scope.init();
 });
 
 altruistApp.angular.controller('homeController', function ($scope, $http) {
