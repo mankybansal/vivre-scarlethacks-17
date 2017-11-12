@@ -28,7 +28,7 @@ router.get('/by/:name',function(req,res){
 router.get('/trending',function(req,res){
 	var name = req.params.name;
     console.log(name);
-	Post.find({deleted:{$ne:"true"}},null,{sort:{borrower_count:1}},function(err,docs){
+	Post.find({deleted:{$ne:"true"}},null,{sort:{borrower_count:-1}},function(err,docs){
 				if(err)
 				{
 					return res.json({success:false,message:"Unknown Error"})
@@ -81,6 +81,7 @@ router.get('/by/id/:id',function(req,res){
 				}
 });
 });
+
 
 
 module.exports = router;
