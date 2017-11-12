@@ -27,7 +27,11 @@ router.post('/',function(req,res){
              attributes = {size:req.body.size, color: req.body.color}
          }
         
-         
+         if(req.body.image_url){
+             image_url = req.body.image_url;
+         }else{
+             image_url = "placeholder"
+         }
         var post = new Post({
 		name:req.body.name,
 		description: req.body.desc,
@@ -36,7 +40,7 @@ router.post('/',function(req,res){
 		attributes:attributes,
         status:req.body.status,
         deleted:"false",
-            image_url :req.body.image-url
+            image_url :image_url
 
 	});
          post.save(function(err){
