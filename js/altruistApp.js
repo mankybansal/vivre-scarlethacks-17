@@ -172,7 +172,7 @@ altruistApp.requests = {
 altruistApp.angular.controller('altruistAppController', function ($location, $scope, store, $http) {
 
 
-    $scope.init = function(){
+    $scope.init = function () {
         $scope.user = {
             token: null,
             name: null,
@@ -561,18 +561,21 @@ altruistApp.angular.controller('productController', function (store, $location, 
     $scope.borrowNow = function () {
         $scope.user = store.get("userObject");
 
-        var params = {
-            token: $scope.user.token,
-            post_id: $scope.currentProduct._id,
-            poster_id: $scope.currentProduct.user[0]._id
-        };
+        if (!$scope.user) {
+            alert("You need to log in.");
+        } else {
+            var params = {
+                token: $scope.user.token,
+                post_id: $scope.currentProduct._id,
+                poster_id: $scope.currentProduct.user[0]._id
+            };
 
-        altruistApp.requests.borrowNow(params, function (response) {
-            $scope.safeApply(function () {
-                console.log("BORROWWWWWWWWWWWWWWWWWWWW", response);
+            altruistApp.requests.borrowNow(params, function (response) {
+                $scope.safeApply(function () {
+                    console.log("BORROWWWWWWWWWWWWWWWWWWWW", response);
+                });
             });
-        });
-
+        }
 
     };
 

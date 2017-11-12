@@ -43,6 +43,7 @@
     }
 
     .item-image {
+        overflow:hidden;
         display: inline-block;
         width: 140px;
         height: 140px;
@@ -209,7 +210,7 @@
                 <div class="item-category">{{item.category}}</div>
             </div>
             <div class="item-name">{{item.name}}</div>
-            <div class="item-author">{{item.attributes[0].Author}}</div>
+            <div class="item-author">{{ item.attributes[0].Author ||  item.attributes[0].Publisher || item.attributes[0].manufacture || (item.attributes[0].size + " . " + item.attributes[0].color)}}</div>
 
         </div>
     </div>
@@ -295,7 +296,7 @@
                 <div class="item-category brown">{{item.category}}</div>
             </div>
             <div class="item-name">{{item.name}}</div>
-            <div class="item-author">{{item.attributes[0].Author}}</div>
+            <div class="item-author">{{item.attributes[0].manufacture}}</div>
         </div>
     </div>
 </div>
