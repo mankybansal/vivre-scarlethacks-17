@@ -44,4 +44,24 @@ router.get('/trending',function(req,res){
 				}
 		});
 });
+
+router.get('/by/category/:name',function(req,res){
+    var name = req.params.name;
+    Post.find({category:name},function(err,docs){
+				if(err)
+				{
+					return res.json({success:false,message:"Unknown Error"})
+				}
+				else if(docs.length == 0)
+				{
+					return res.json({success:false,message:"No Ads match your Search Condition"});
+				}
+				else
+				{
+					return res.json({success:true,result:docs});
+
+				}
+});
+});
+
 module.exports = router;

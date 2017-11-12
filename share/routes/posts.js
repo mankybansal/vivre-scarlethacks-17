@@ -14,6 +14,18 @@ router.post('/',function(req,res){
          if(req.body.category == "Books"){
              attributes = {Author:req.body.author, Publisher: req.body.pub}
          }
+         if(req.body.category == "Video Games"){
+             attributes = {Publisher:req.body.pub,rating:req.body.rating,genre:req.body.genre}
+         }
+         if(req.body.categoy == "Toys"){
+             attributes = {Age:req.body.age,manufacture: req.body.man}
+         }
+         if(req.body.category == "Household"){
+             attributes = {manufacture: req.body.man, category: req.body.cat}
+         }
+         if(req.body.category == "Clothes"){
+             attributes = {size:req.body.size, color: req.body.color}
+         }
          
         var post = new Post({
 		name:req.body.name,

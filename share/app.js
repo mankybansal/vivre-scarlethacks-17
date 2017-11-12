@@ -64,7 +64,7 @@ io.on('connection', function (socket) {
  });
     socket.on('update-url',function(data){
         console.log(data);
-        console.log(data.token);
+        console.log(data[0]);
     })
 });
 app.use(function(req,res,next){
