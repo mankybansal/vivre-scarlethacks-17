@@ -28,7 +28,7 @@
     <meta name="google-signin-client_id"
           content="373805643913-05b9vfmbhchqekc3sibs276o516cco89.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    
+
 
     <!-- FAVICON -->
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
@@ -44,29 +44,35 @@
 
     <a href="home">
         <div class="header-logo clickable">
-            <img src="images/logo-white.png" class="header-logo-img clickable">
+            <img src="images/logo-menu.png" class="header-logo-img clickable">
+            <img src="images/logo-text.png" style="height: 50px; margin-top: -10px; margin-right: 70px;">
         </div>
     </a>
 
-    <div class="header-links clickable" style="float: left;">Home</div>
-    <div class="header-links clickable" style="float: left;">Browse Catalog</div>
+    <div class="header-links clickable" style="float: left;">Home Page</div>
+    <a href="#!../catalog">
+        <div class="header-links clickable" style="float: left;">Browse Catalog</div>
+    </a>
     <div class="header-links clickable" style="float: left;">About Us</div>
     <div class="header-links clickable" style="float: left;">Contact Us</div>
+    <div class="header-links clickable" style="float: left;">Help</div>
 
     <div class="header-spacer-responsive" style="float: right;"></div>
 
     <div class="action-button clickable" ng-show="!loggedIn" ng-click="showLogin()">Sign In</div>
-    <div class="action-button clickable getstarted-button"  ng-show="!loggedIn" >Get Started</div>
+    <div class="action-button clickable getstarted-button" ng-show="!loggedIn">Get Started</div>
 
     <div class="action-button clickable" ng-show="loggedIn" ng-click="signOut()">Log Out</div>
-    <div class="header-links clickable" ng-show="loggedIn">{{ user.name }}
-    &nbsp; <i class="fa fa-user-circle"></i></div>
+
+    <div class="header-links clickable" ng-show="loggedIn">
+        Welcome, <b>{{ user.name }}</b> &nbsp;<i class="fa fa-user-circle" style="color: #AAA;"></i>
+    </div>
 
 </div>
 
-<div class="loginOverlay"  ng-show="loginOverlay">
+<div class="loginOverlay" ng-show="loginOverlay">
 
-    <div class="loginContainer">
+    <div class="loginContainer" style="  background: url('images/background.png') 100% 100%;">
 
         <div class="loginClose" ng-show="!showLogin" ng-click="hideLogin()">
             <i class="fa fa-close"></i>
@@ -75,22 +81,24 @@
             <img src="images/logoTransparent.png" class="loginLogo">
         </div>
 
-        <div class="loginPanel" ng-show="!requireRegister"  style="z-index: 999; position: relative;">
+        <div class="loginPanel" ng-show="!requireRegister" style="z-index: 999; position: relative;">
             <div class="loginTitleContainer">Sign-in to Altruist</div>
 
             <div class="g-signin2" data-onsuccess="onSignIn"
                  style="width: 270px; margin: 0 auto; height: 60px; margin-top: 20px;"></div>
 
-            <div style="width: 100%; box-sizing: border-box; padding: 20px 100px 20px 100px; color: #AAA; font-family: Roboto-Thin">
+            <div style="width: 100%; box-sizing: border-box; padding: 20px 100px 20px 100px; color: #AAA; font-family: Roboto-Light">
                 We'll help you register if you don't have an account.
             </div>
         </div>
 
-        <div class="registerPanel" ng-show="requireRegister" style="z-index: 999; position: relative; text-align: center">
+        <div class="registerPanel" ng-show="requireRegister"
+             style="z-index: 999; position: relative; text-align: center">
             <div class="loginTitleContainer">Sign-in up for Altruist</div>
 
             <input class="inputBox" type="text" placeholder="Name" ng-model="user.name"><br>
-            <input class="inputBox" type="email" style="background: rgba(255,255,255,.5)" placeholder="Email" ng-model="user.email" disabled><br>
+            <input class="inputBox" type="email" style="background: rgba(255,255,255,.5)" placeholder="Email"
+                   ng-model="user.email" disabled><br>
             <input class="inputBox" type="text" placeholder="Phone" maxlength="10" ng-model="user.phoneNo"><br>
             <input class="inputBox" type="text" placeholder="Room" style="width: 100px" ng-model="user.aNo">
             <input class="inputBox" type="text" placeholder="Building/Street Address" style="width: 196px"
@@ -100,9 +108,11 @@
             <select class="inputBox clickable" ng-model="user.community">
                 <option disabled selected>Select a Community</option>
                 <option ng-repeat="community in communities" value="{{community.__id}}">{{ community.name }}</option>
-            </select>   <br>
+            </select> <br>
 
-            <div class="action-button clickable" ng-click="register()" style="margin: 0 auto; float: unset; margin-top: 15px; padding: 15px 25px 15px 25px;">Continue</div>
+            <div class="action-button clickable" ng-click="register()"
+                 style="margin: 0 auto; float: unset; margin-top: 15px; padding: 15px 25px 15px 25px;">Continue
+            </div>
         </div>
 
         <img src="images/clouds.png" style="width: 100%; margin-top: -30px;">

@@ -1,1 +1,142 @@
-CATALOG PAGE
+<div class="section section-header-spacer"></div>
+
+
+<style>
+
+
+    .trendingContainer {
+        width: 100%;
+        height: 420px;
+        background: #DDD;
+    }
+
+    .trendingTitle {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 70px 0 20px 0;
+        font-size: 35px;
+        font-family: Roboto-Light;
+        text-align: center;
+    }
+
+    .itemContainer {
+        width: 100%;
+        text-align: center;
+    }
+
+    .item {
+        display: inline-block;
+        box-sizing: border-box;
+        margin: 15px 5px 10px 5px;
+        width: 200px;
+        height: 220px;
+        vertical-align: top;
+        text-align: center;
+    }
+
+    .item-image {
+        display: inline-block;
+        width: 140px;
+        height: 140px;
+        background: #DDD;
+        border: 3px solid #EEE;
+    }
+
+    .item-img {
+        width: 100%;
+        opacity: .05;
+        z-index: 0;
+    }
+
+    .item-name {
+        margin-top: 10px;
+        font-size: 18px;
+        font-family: Roboto-Light;
+    }
+
+    .item-author {
+        margin-top: 5px;
+        font-size: 12px;
+        font-family: Roboto-Light;
+        text-transform: uppercase;
+    }
+
+    .item-category {
+        display: inline-block;
+        position: relative;
+        z-index: 999;
+        background: #333;
+        text-transform: uppercase;
+        font-family: Roboto-Light;
+        font-size: 12px;
+        color: white;
+        padding: 7px;
+        box-sizing: border-box;
+        width: 100%;
+        margin-top: -28px;
+    }
+
+    .searchContainer {
+        width: 100%;
+        height: 60px;
+        text-align: center;
+    }
+
+    .searchBar {
+        width: 700px;
+        height: 60px;
+        border: 0;
+        outline: 0;
+        padding: 22px 20px 18px 20px;
+        box-sizing: border-box;
+        font-size: 20px;
+        font-family: Roboto-Light;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 0;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+    }
+
+    .searchBtn {
+        display: block;
+        position: relative;
+        z-index: 999;
+        height: 50px;
+        width: 50px;
+        left: 0;
+        right: 0;
+        background: steelblue;
+    }
+</style>
+
+<div class="trendingContainer">
+    <div class="trendingTitle">Items that are <span style="font-family: Roboto-Regular;">#trending</span></div>
+
+    <div class="itemContainer">
+        <div class="item" ng-repeat="item in trending_items">
+
+            <div class="item-image">
+                <img src="images/logo-menu.png" class="item-img">
+                <div class="item-category">{{item.category}}</div>
+            </div>
+            <div class="item-name">{{item.name}}</div>
+            <div class="item-author">{{item.attributes[0].Author}}</div>
+
+        </div>
+    </div>
+</div>
+
+<div class="searchContainer">
+    <input type="text" class="searchBar" placeholder="Search for Products, Authors and More" name="searchVal" ng-model="searchVal">
+
+    <div class="searchBtn">
+        <i class="fa fa-search"></i>
+    </div>
+</div>
+
+<input type="submit" value="Search" ng-click="search()" class="btn-lg btn-primary center-block">
+
