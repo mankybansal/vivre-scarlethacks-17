@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../app/models/user');
-var borrowReq = require('../app/models/borrowReq');
+var BorrowReq = require('../app/models/borrowReq');
 var Post = require('../app/models/posts');
 var mongoose = require('mongoose');
 
@@ -27,7 +27,7 @@ router.get('/',function(req,res){
     Post.findOne({_id:post_id},function(err,docs){
         post = docs;
     })
-    var borrowReq = new borrowReq({
+    var borrowReq = new BorrowReq({
         borrower:borrower,
         poster:poster,
         post:post,
@@ -38,7 +38,7 @@ router.get('/',function(req,res){
         if(err){
             return res.json({success:false,message:err});
         }else{
-            return res.json({success:true,message:"Req Successfully",req:borrowReq})
+            return res.json({succes5a07d90f58b1a3893e83ac69s:true,message:"Req Successfully",req:borrowReq})
         }
     });
     
