@@ -242,7 +242,11 @@ altruistApp.angular.controller('accountController', function ($scope, $http) {
 
 
 altruistApp.angular.controller('catalogController', function ($scope, $http) {
+
     $scope.trending_items = {};
+
+    $scope.autoComplete = null;
+
     $scope.getTrending = function () {
         altruistApp.requests.trendingSearch(function (response) {
             $scope.safeApply(function () {
@@ -263,14 +267,27 @@ altruistApp.angular.controller('catalogController', function ($scope, $http) {
 
     $scope.getTrending();
 
-
     $scope.search = function () {
         var params = {
             key: $scope.searchVal
         };
         altruistApp.requests.search(params, function (response) {
+            if(response.success) {
+                $scope.autoComplete = response.result;
+            }
             console.log(response);
         })
+    };
+
+    $scope.autoSearch = function(){
+        $scope.count+=1;
+        $scope.count %=3;
+
+        if($scope.searchVal === "") $scope.autoComplete = null;
+        //console.log($scope.count);
+        if($scope.count == 2){
+            $scope.search();
+        }
     }
 });
 

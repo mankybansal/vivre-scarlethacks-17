@@ -76,7 +76,6 @@ html, body {
     display: inline-block;
     float: right;
     margin-left: 15px;
-    transition: all ease .3s;
 }
 
 .clickable {
