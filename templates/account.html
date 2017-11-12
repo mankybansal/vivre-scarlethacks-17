@@ -5,9 +5,9 @@
 		<!-- Compiled and minified CSS -->
   		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> 
 	</head>
-	<body class="">
+	<body class="" ng-app="accountApp" ng-controller="mainController">
 		<!--To make profile for users-->
-		<div class="" id="">
+		<div class="" id="" ng-model="account">
 			<div>
 				<!-- Nav Bar for Account -->
 				<nav>
@@ -25,13 +25,49 @@
 			<div class="marginDist">
 				<div class="row">
 					<div class="col s6 m6 l4">
-						<img src="../img/sampProfile.png" alt="Profile picture" width="50" height="50" id="profile-img">	
+						<img src="../img/sampProfile.png" alt="Profile picture" id="profile-img">	
+					</div>
+					<div class="col s6 m6 l4">
+						<!-- Personal Details -->
+						<div>
+							<p class="headingstyle shadowBox" style="text-align:left;">User Details</p>
+							<ul>
+								<li class="subHeadingStyle" >Name</li>
+								<li class="subHeadingStyle">Contact Info</li>
+								<li class="subHeadingStyle">Rating</li>
+							</ul>
+
+						</div>
 					</div>
 				</div>
+
+				<div>
+					<!-- To add tabs for To Sell, Donate and Borrowed -->
+					<div class="row">
+						<div class="col s12">
+					      <ul class="tabs">
+					        <li class="tab col s3"><a href="#test1">Test 1</a></li>
+					        <li class="tab col s3"><a class="active" href="#test2">Test 2</a></li>
+					        <li class="tab col s3"><a href="#test4">Test 4</a></li>
+					      </ul>
+					    </div>
+					    <div id="test1" class="col s12">Test 1</div>
+					    <div id="test2" class="col s12">Test 2</div>
+					    <div id="test4" class="col s12">Test 4</div>
+					</div>
+				</div>
+				<button ng-click="getLogin()">click me</button>
 			</div>
 		</div>
 
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-storage/0.0.15/angular-storage.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angular-ui-router/1.0.0-rc.1/angular-ui-router.min.js"></script>
+	    
+		<script type="text/javascript" src="../js/accountApp.js"></script>
+		
 		<!-- Compiled and minified JavaScript -->
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	</body>
