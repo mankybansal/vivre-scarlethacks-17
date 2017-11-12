@@ -10,8 +10,11 @@ var PostSchema = new Schema({
     category:{type:String, required:true},
     attributes:{type: Array,default: void 0},
     created_at    : { type: Date },
-    updated_at    : { type: Date }
+    updated_at    : { type: Date },
+    borrower:[{ type: Schema.Types.Mixed, ref: 'Community' }],
+    deleted:{type:String,required:true},
+    borrower_count:{type: Number,default : 0}
 });
 module.exports = mongoose.model('Post',PostSchema);
 
-var User = mongoose.model('Post');
+var User = mongoose.model('Post')
