@@ -1,49 +1,105 @@
-	<link rel="stylesheet" href="css/accountcss.css">
-	
-	<div class="" ng-app="accountApp" ng-controller="accountController">
-		<!--To make profile for users-->
-			<!-- To have the profile picture here -->
-			<div class="marginDist">
-				<div class="row">
-					<div class="col s6 m6 l4">
-						<img src="../img/sampProfile.png" alt="Profile picture" id="profile-img">	
-					</div>
-					<div class="col s6 m6 l4">
-						<!-- Personal Details -->
-						<div>
-							<p class="headingstyle shadowBox" style="text-align:left;">User Details</p>
-							<ul>
-								<li class="subHeadingStyle" >{{user.name}}</li>
-								<li class="subHeadingStyle">Contact Info</li>
-								<li class="subHeadingStyle">Rating</li>
-							</ul>
+<style>
 
-						</div>
-					</div>
-				</div>
+    .accountContainer {
+        width: 100%;
+        height: calc(100% - 80px);
+        overflow: auto;
+        box-sizing: border-box;
+        padding: 50px;
+        text-align: center;
+    }
 
-				<div>
-					<!-- To add tabs for To Sell, Donate and Borrowed -->
-					<div class="row">
-						<div class="col s12">
-					      <ul class="tabs">
-					        <li class="tab col s3"><a href="#test1">Test 1</a></li>
-					        <li class="tab col s3"><a class="active" href="#test2">Test 2</a></li>
-					        <li class="tab col s3"><a href="#test4">Test 4</a></li>
-					      </ul>
-					    </div>
-					    <div id="test1" class="col s12">Test 1</div>
-					    <div id="test2" class="col s12">Test 2</div>
-					    <div id="test4" class="col s12">Test 4</div>
-					</div>
-				</div>
-				<button ng-click="getLogin()">click me</button>
-			</div>
-		</div>
+    .accountPanel {
+        background: white;
+        margin: 30px;
+        width: 350px;
+        height: 350px;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 1);
+        box-sizing: border-box;
+        padding: 50px;
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+    }
+
+    .accountPanel > .fa-user-circle {
+        font-size: 100px;
+        color: #DDD;
+    }
+
+    .user-name, .user-email, .user-community {
+        font-family: Roboto-Thin;
+        margin-top: 2px;
+        font-size: 15px;
+    }
+
+    .user-name {
+        font-size: 25px;
+        margin-top: 20px;
+        font-family: Roboto-Light;
+    }
+
+    .user-community {
+        margin-top: 10px;
+        font-family: Roboto-Light;
+        color: steelblue;
+    }
+
+    .panel-title {
+        font-size: 30px;
+        color: #555;
+        font-family: Roboto-Thin;
+    }
+
+    .panel-count {
+        font-size: 120px;
+        margin-top: 20px;
+        color: #AAA;
+        font-family: Roboto-Thin;
+    }
+
+    .white {
+        color: white;
+    }
+</style>
+
+<div style="width: 100%; height: 100%; background: url('images/background.png');">
+    <div class="section section-header-spacer"></div>
 
 
-		<!--<script type="text/javascript" src="../js/accountApp.js"></script>-->
-		
-		<!-- Compiled and minified JavaScript -->
-  		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <div class="accountContainer">
+        <div class="accountPanel">
+            <i class="fa fa-user-circle"></i><br>
+            <div class="user-name">{{ user.name }}</div>
+            <div class="user-email">{{ user.email }}</div>
+            <div class="user-community">Illinois Institute of Technology</div>
+            <div class="action-button clickable" style="float: unset;">Account Settings</div>
+        </div>
+        <div class="accountPanel" style="background: steelblue">
+            <div class="panel-title white" >Notifications</div>
+            <div class="panel-count white">0</div>
+            <div class="action-button clickable" style="background: white; color: #000; float: unset;">Notification Manager</div>
+        </div>
+        <div class="accountPanel">
+            <div class="panel-title">Your Items</div>
+            <div class="panel-count">0</div>
+            <div class="action-button clickable" style="float: unset;">Item Manager</div>
+        </div>
+        <div class="accountPanel">
+            <div class="panel-title">Borrowed Items</div>
+            <div class="panel-count">0</div>
+            <div class="action-button clickable" style="float: unset;">Borrow History</div>
+        </div>
+        <div class="accountPanel">
+            <div class="panel-title">Borrow Requests</div>
+            <div class="panel-count">0</div>
+            <div class="action-button clickable" style="float: unset;">Request Now</div>
+        </div>
+        <div class="accountPanel" style="background: darkslategray;">
+            <div class="panel-title white">Credits Remaining</div>
+            <div class="panel-count white">0</div>
+            <div class="action-button clickable" style="background: white; color: #000;float: unset;">Earn More</div>
+            <div class="action-button clickable" style="background: white; color: #000;float: unset;">Use Now</div>
+        </div>
+    </div>
 </div>
