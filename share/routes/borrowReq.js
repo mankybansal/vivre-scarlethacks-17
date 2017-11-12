@@ -5,7 +5,7 @@ var BorrowReq = require('../app/models/borrowReq');
 var Post = require('../app/models/posts');
 var mongoose = require('mongoose');
 
-router.get('/',function(req,res){
+router.post('/',function(req,res){
     var email = req.decoded;
     var poster_id = req.params.poster_id;
     var post_id = req.params.post_id;
